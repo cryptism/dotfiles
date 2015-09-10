@@ -8,6 +8,8 @@
 
 (package-initialize)
 
+(tool-bar-mode -1)
+
 (setq package-list
       '(use-package
 	multiple-cursors
