@@ -7,9 +7,9 @@
 	     '("melpa" . "http://melpa.org/packages/") t)
 
 (package-initialize)
-
 (tool-bar-mode -1)
-
+(setq mac-option-key-is-meta t)
+(setq mac-right-option-modifier nil)
 (setq package-list
       '(use-package
 	multiple-cursors
