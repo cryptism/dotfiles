@@ -62,18 +62,19 @@
   :config
   (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent))
 
-(use-package tidal-mode
-  :mode "\\.tidal.hs\\'"
-  :init
-  (setq load-path (cons "~/composition/tidal/share" load-path))
-  (require 'tidal)
-  (setq tidal-interpreter "/usr/local/bin/ghci")
-  ;o
-  (if (= (length (shell-command-to-string "ps cax | grep jackd")) 0)
-      (call-process-shell-command "jackd -d coreaudio &"))
-  (when (= (length (shell-command-to-string "ps cax | grep dirt")) 0)
-    (sleep-for 1)
-    (call-process-shell-command "cd ~/composition/bin/Dirt && ./dirt &")))
+; Add back in til I know what I'm doing
+;(use-package tidal-mode
+;  :mode "\\.tidal.hs\\'"
+;  :init
+;  (setq load-path (cons "~/composition/tidal/share" load-path))
+;  (require 'tidal)
+;  (setq tidal-interpreter "/usr/local/bin/ghci")
+;  ;o
+;  (if (= (length (shell-command-to-string "ps cax | grep jackd")) 0)
+;      (call-process-shell-command "jackd -d coreaudio &"))
+;  (when (= (length (shell-command-to-string "ps cax | grep dirt")) 0)
+;    (sleep-for 1)
+;    (call-process-shell-command "cd ~/composition/bin/Dirt && ./dirt &")))
 
 (use-package coffee-mode
   :config (custom-set-variables '(coffee-tab-width 4)))
@@ -84,8 +85,8 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#2e3436" "#a40000" "#4e9a06" "#c4a000" "#204a87" "#5c3566" "#729fcf" "#eeeeec"])
- '(coffee-tab-width 4)
- '(custom-enabled-themes (quote (wheatgrass))))
+ '(custom-enabled-themes (quote (wheatgrass)))
+ '(inhibit-startup-screen t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
