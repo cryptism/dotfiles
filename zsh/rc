@@ -19,7 +19,7 @@ if [[ $CURRENT_OS == 'OS X' ]]; then
 fi
 
 # Load the theme.
-antigen theme $HOME/.themes/huh.zsh-theme --no-local-clone
+antigen theme $HOME/.themes/lambda --no-local-clone
 # Tell antigen that you're done.
 antigen apply
 
