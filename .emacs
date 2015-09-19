@@ -9,6 +9,7 @@
 (package-initialize)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(setq vc-follow-symlinks t)
 (scroll-bar-mode -1)
 (setq mac-option-key-is-meta t)
 (setq mac-right-option-modifier nil)
