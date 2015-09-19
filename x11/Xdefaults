@@ -1,0 +1,10 @@
+URxvt*foreground: gold
+URxvt*depth: 32
+URxvt*background: rgba:0000/0000/0200/c800
+
+URxvt.fading: 25
+URxvt*font: xft:DejaVu Sans Mono:style=Book:antialias=false:size=10,xft:Unifont
+
+
+URxvt*saveLines:32767
+URxvt*scrollBar: false
