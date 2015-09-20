@@ -19,5 +19,10 @@ main = do
                         { ppOutput = hPutStrLn xmproc
                         , ppTitle = xmobarColor "green" "" . shorten 50
                         }
+        , normalBorderColor = "#9c4c8c"
+        , focusedBorderColor = "#ffffff"
         } `additionalKeys`
-        [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock; xset dpms force off") ]
+        [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock; xset dpms force off")
+        , ((mod4Mask .|. shiftMask, xK_BackSpace), spawn "chromium")
+        , ((mod4Mask .|. shiftMask, xK_numbersign), spawn "emacs")
+        ]
