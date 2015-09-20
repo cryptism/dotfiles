@@ -2,6 +2,7 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.Cursor(setDefaultCursor)
 import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
 
@@ -12,7 +13,9 @@ main = do
     xmonad $ defaultConfig
         { modMask = mod4Mask
         , terminal = "urxvt -mod mod1"
-        , startupHook = spawn "xset r rate 200 20"
+        , startupHook = do
+              spawn "xset r rate 200 20"
+              setDefaultCursor xC_left_ptr
         , manageHook = manageDocks <+> manageHook defaultConfig
         , layoutHook = avoidStruts  $  layoutHook defaultConfig
         , logHook = dynamicLogWithPP xmobarPP
