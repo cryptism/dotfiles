@@ -6,12 +6,12 @@
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.org/packages/") t)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 (package-initialize)
 ;uwsgi-style keyboard yanking
 (defun paste-primary-selection ()
   (interactive)
-  (insert
-   (x-get-selection 'PRIMARY)))
+  (insert (x-get-selection 'PRIMARY)))
 (global-set-key (kbd "S-<insert>") 'paste-primary-selection)
 
 (tool-bar-mode -1)
@@ -72,8 +72,13 @@
     (require 'use-package))
 
 (use-package haskell-mode
+  :init
+  (bind-key "C-," 'haskell-move-nested-left)
+  (bind-key "C-." 'haskell-move-nested-right)
+  (bind-key "C-<" (kbd "C-u C-,")) ;obviously depends on prev binding
+  (bind-key "C->" (kbd "C-u C-.")) ;obviously depends on prev binding
   :config
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent))
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
 
 ; Add back in til I know what I'm doing
 ;(use-package tidal-mode
