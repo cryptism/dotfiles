@@ -20,7 +20,7 @@ else
 fi
 antigen apply
 
-export EDITOR="/usr/local/bin/emacs"
+export EDITOR=`which emacs`
 export PYTHONSTARTUP=~/.pythonrc
 source /usr/local/share/zsh/site-functions/_aws
 
