@@ -36,4 +36,6 @@ main = do
                , spawn "xscreensaver-command -lock; xset dpms force off")
         , ((mod4Mask .|. shiftMask, xK_BackSpace), spawn "chromium")
         , ((mod4Mask .|. shiftMask, xK_numbersign), spawn "emacs")
+        , ((mod4Mask, xK_p),
+               spawn "dmenu_run -fn \"xft:Bitstream Vera Sans Mono:size=11:antialias=true\"")
         ]
