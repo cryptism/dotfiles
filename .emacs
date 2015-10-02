@@ -7,6 +7,12 @@
 	     '("melpa" . "http://melpa.org/packages/") t)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (package-initialize)
+;uwsgi-style keyboard yanking
+(defun paste-primary-selection ()
+  (interactive)
+  (insert
+   (x-get-selection 'PRIMARY)))
+(global-set-key (kbd "S-<insert>") 'paste-primary-selection)
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
