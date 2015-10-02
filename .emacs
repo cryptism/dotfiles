@@ -5,7 +5,7 @@
 
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.org/packages/") t)
-
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 (package-initialize)
 
 (tool-bar-mode -1)
@@ -45,7 +45,7 @@
 	json-mode
 	ghc
 	erlang
-	yaml-mode	
+	yaml-mode
 	idris-mode
 	purescript-mode
 	tabbar
