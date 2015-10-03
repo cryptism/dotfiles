@@ -81,18 +81,18 @@
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
 
 ; Add back in til I know what I'm doing
-;(use-package tidal-mode
-;  :mode "\\.tidal.hs\\'"
-;  :init
-;  (setq load-path (cons "~/composition/tidal/share" load-path))
-;  (require 'tidal)
-;  (setq tidal-interpreter "/usr/local/bin/ghci")
-;  ;o
-;  (if (= (length (shell-command-to-string "ps cax | grep jackd")) 0)
-;      (call-process-shell-command "jackd -d coreaudio &"))
-;  (when (= (length (shell-command-to-string "ps cax | grep dirt")) 0)
-;    (sleep-for 1)
-;    (call-process-shell-command "cd ~/composition/bin/Dirt && ./dirt &")))
+(use-package tidal-mode
+  :mode "\\.tidal.hs\\'"
+  :init
+  (setq load-path (cons "~/composition/tidal/share" load-path))
+  (if (file-exists-p "tidal") (require 'tidal))
+  (setq tidal-interpreter "/usr/local/bin/ghci")
+
+  (if (= (length (shell-command-to-string "ps cax | grep jackd")) 0)
+      (call-process-shell-command "jackd -d coreaudio &"))
+  (when (= (length (shell-command-to-string "ps cax | grep dirt")) 0)
+    (sleep-for 1)
+    (call-process-shell-command "cd ~/composition/bin/Dirt && ./dirt &")))
 
 (use-package coffee-mode
   :config (custom-set-variables '(coffee-tab-width 4)))
