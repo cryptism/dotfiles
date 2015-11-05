@@ -82,13 +82,13 @@
   :mode "\\.tidal.hs\\'"
   :init
   (setq load-path (cons "~/composition/tidal/share" load-path))
-  (require 'tidal)
   (setq tidal-interpreter "/usr/local/bin/ghci")
   (if (= (length (shell-command-to-string "ps cax | grep jackd")) 0)
       (call-process-shell-command "jackd -d coreaudio &"))
   (if (= (length (shell-command-to-string "ps cax | grep dirt")) 0)
     (sleep-for 1)
     (call-process-shell-command "cd ~/composition/bin/Dirt && ./dirt &")))
+
 (use-package haskell-mode
   :init
   (bind-key "C-," 'haskell-move-nested-left)
