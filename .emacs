@@ -15,7 +15,6 @@
 (setq mac-right-option-modifier nil)
 (load-theme 'wheatgrass)
 (global-prettify-symbols-mode +1)
-
 ;; Bootstrap
 (require 'package)
 (setq package-archives
@@ -32,16 +31,16 @@
 (eval-when-compile (require 'use-package))
 ;; My stuff first
 (use-package misc
-  :load-path "site-lisp/misc"
-  :commands paste-primary-selection
-  :bind ("S-<insert>" . paste-primary-selection)
+  :defer t
+  :load-path "site-lisp/misc.el"
+  :bind ("s-<insert>" . paste-primary-selection)
   :config (add-hook 'before-save-hook 'delete-trailing-whitespace))
 ;; Then the rest
 (use-package ag :ensure t)
 (use-package agda2 :defer t)
 (use-package auctex :disabled t)
 (use-package auto-complete :ensure t)
-(use-package cider :ensure t :defer t)
+(use-package cider :defer t)
 (use-package clojure-mode
   :defer t
   :config
@@ -57,10 +56,11 @@
 (use-package erlang :defer t)
 (use-package exec-path-from-shell :ensure t)
 (use-package flycheck :ensure t)
-(use-package ghc)
+(use-package ghc :ensure t)
 (use-package go-mode :defer t)
 (use-package guide-key :ensure t)
 (use-package haskell-mode
+  :ensure t
   :bind (("C-," . haskell-move-nested-left)
 	 ("C-." . haskell-move-nested-right))
   :init
@@ -90,6 +90,7 @@
 (use-package json-mode :ensure t :defer t)
 (use-package magit :ensure t)
 (use-package markdown-mode :ensure t :defer t)
+
 (use-package multiple-cursors :ensure t)
 (use-package neotree
   :ensure t
@@ -110,6 +111,7 @@
 (use-package scss-mode :ensure t :defer t)
 (use-package tabbar :ensure t)
 (use-package tidal
+  :disabled t
   :after haskell-mode
   :mode ("\\.tidal\\.hs\\'" . haskell-mode)
   :load-path "~/composition/tidal/share"
