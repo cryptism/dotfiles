@@ -1,7 +1,11 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
 (defvar *emacs-load-start* (current-time))
+(defvar dotfiles-dir)
 (setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
 (prefer-coding-system 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
+(setq buffer-file-coding-system 'utf-8)
 
 ;; Display crap
 (setq-default yank-excluded-properties 't)
@@ -11,8 +15,10 @@
 (scroll-bar-mode -1)
 (set-frame-parameter (selected-frame) 'alpha '(85 70))
 (setq inhibit-startup-screen t)
+(defvar mac-option-key-is-meta)
 (setq mac-option-key-is-meta t)
 (setq mac-right-option-modifier nil)
+(setq ring-bell-function #'ignore)
 (load-theme 'wheatgrass)
 (global-prettify-symbols-mode +1)
 ;; Bootstrap
@@ -27,7 +33,6 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
 (eval-when-compile (require 'use-package))
 ;; My stuff first
 (use-package misc
@@ -38,27 +43,35 @@
 ;; Then the rest
 (use-package ag :ensure t)
 (use-package agda2 :defer t)
-(use-package auctex :disabled t)
-(use-package auto-complete :ensure t)
-(use-package cider :defer t)
+(use-package auctex :ensure t :defer t)
 (use-package clojure-mode
   :defer t
   :config
-  (require 'smartparens-config)
+  (use-package smartparens-config)
+  (use-package cider :defer t)
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode))
 (use-package coffee-mode
   :defer t
-  :config (setq coffee-tab-width 4))
-(use-package company :ensure t :defer t)
-(use-package csv-mode :ensure t)
-(use-package dockerfile-mode :ensure t)
+  :config (setq coffee-tab-width 2))
+(use-package company
+  :ensure t
+  :config (add-hook 'after-init-hook 'global-company-mode))
+(use-package csv-mode :ensure t :defer t)
+(use-package dockerfile-mode :ensure t :defer t)
 (use-package easy-kill :ensure t)
 (use-package erlang :defer t)
-(use-package exec-path-from-shell :ensure t)
-(use-package flycheck :ensure t)
-(use-package ghc :ensure t)
+(use-package exec-path-from-shell
+  :config (when (memq window-system '(mac ns))
+	    (exec-path-from-shell-initialize)))
+(use-package flycheck
+  :ensure t
+  :config (add-hook 'after-init-hook #'global-flycheck-mode))
 (use-package go-mode :defer t)
-(use-package guide-key :ensure t)
+(use-package guide-key
+  :ensure t
+  :config
+  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4"))
+  (guide-key-mode 1))
 (use-package haskell-mode
   :ensure t
   :bind (("C-," . haskell-move-nested-left)
@@ -68,7 +81,8 @@
   (bind-key "C->" '(kbd "C-u C-."))
   :config
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-  (setq haskell-font-lock-symbols t))
+  (setq haskell-font-lock-symbols t)
+  (use-package ghc :ensure t))
 (use-package helm
   :ensure t
   :defer t
@@ -76,22 +90,19 @@
 (use-package imenu-anywhere
   :ensure t
   :bind ("C-c i" . imenu-anywhere))
-(use-package idris-mode
-  :mode "\\.idr\\'"
-  :defer t)
-(use-package jedi :ensure t)
+(use-package idris-mode :defer t)
 (use-package js2-mode
   :defer t
   :ensure t
-  :mode "\\.js\\'"
   :config
   (add-hook 'js2-mode-hook
 	    (lambda () (push '("function" . ?λ) prettify-symbols-alist))))
 (use-package json-mode :ensure t :defer t)
 (use-package magit :ensure t)
 (use-package markdown-mode :ensure t :defer t)
-
-(use-package multiple-cursors :ensure t)
+(use-package multiple-cursors
+  :ensure t
+  :config (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines))
 (use-package neotree
   :ensure t
   :bind ([f8] . neotree-toggle))
@@ -99,7 +110,22 @@
 (use-package protobuf-mode :defer t)
 (use-package puppet-mode :defer t)
 (use-package purescript-mode :defer t)
-(use-package python-mode :ensure t :defer t)
+(use-package python-mode
+  :ensure t
+  :after exec-path-from-shell
+  :defer t
+  :config
+  (exec-path-from-shell-copy-env "CONDA_ENV_PATH")
+  (use-package virtualenv :ensure t)
+  (use-package jedi
+    :after company
+    :defer t
+    :ensure t
+    :config
+    (remove-hook 'after-init-hook 'global-company-mode)
+    (add-hook 'python-mode-hook 'jedi:setup)
+    (setq jedi:complete-on-dot t)))
+
 (use-package rainbow-delimiters :ensure t)
 (use-package rainbow-mode :ensure t)
 (use-package rust-mode :defer t)
@@ -122,8 +148,11 @@
   (if (= (length (shell-command-to-string "ps cax | grep dirt")) 0)
       (sleep-for 1)
     (call-process-shell-command "cd ~/composition/bin/Dirt/dirt &")))
+(use-package todotxt :mode ("\\todo.txt\\'" . todotxt-mode))
 (use-package tuareg :defer t)
 (use-package twittering-mode :ensure t :defer t)
 (use-package yaml-mode :ensure t :defer t)
 (use-package yasnippet :ensure t)
-(use-package virtualenv :ensure t)
+
+(provide '.emacs)
+;;; .emacs ends here
