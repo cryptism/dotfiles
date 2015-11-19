@@ -42,7 +42,10 @@
   :config (add-hook 'before-save-hook 'delete-trailing-whitespace))
 ;; Then the rest
 (use-package ag :ensure t)
-(use-package agda2 :defer t)
+(use-package agda2
+  :mode ("\\.agda\\'" . agda2-mode)
+  :defer t
+  )
 (use-package auctex :ensure t :defer t)
 (use-package clojure-mode
   :defer t
@@ -152,7 +155,7 @@
 (use-package tuareg :defer t)
 (use-package twittering-mode :ensure t :defer t)
 (use-package yaml-mode :ensure t :defer t)
-(use-package yasnippet :ensure t)
+(use-package yasnippet :ensure t :defer t)
 
 (provide '.emacs)
 ;;; .emacs ends here
