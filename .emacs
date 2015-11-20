@@ -6,7 +6,6 @@
 (setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
 (prefer-coding-system 'utf-8)
 (setq buffer-file-coding-system 'utf-8)
-
 ;; Display crap
 (setq-default yank-excluded-properties 't)
 (tool-bar-mode -1)
@@ -44,8 +43,7 @@
 (use-package ag :ensure t)
 (use-package agda2
   :mode ("\\.agda\\'" . agda2-mode)
-  :defer t
-  )
+  :defer t)
 (use-package auctex :ensure t :defer t)
 (use-package clojure-mode
   :defer t
@@ -58,7 +56,9 @@
   :config (setq coffee-tab-width 2))
 (use-package company
   :ensure t
-  :config (add-hook 'after-init-hook 'global-company-mode))
+  :init
+  (setq company-idle-delay 0.2)
+  (add-hook 'after-init-hook #'global-company-mode))
 (use-package csv-mode :ensure t :defer t)
 (use-package dockerfile-mode :ensure t :defer t)
 (use-package easy-kill :ensure t)
@@ -74,6 +74,7 @@
   :ensure t
   :config
   (setq guide-key/guide-key-sequence '("C-x r" "C-x 4"))
+  (setq guide-key/idle-delay 1.0)
   (guide-key-mode 1))
 (use-package haskell-mode
   :ensure t
@@ -125,10 +126,9 @@
     :defer t
     :ensure t
     :config
-    (remove-hook 'after-init-hook 'global-company-mode)
+    (remove-hook 'after-init-hook #'global-flycheck-mode)
     (add-hook 'python-mode-hook 'jedi:setup)
     (setq jedi:complete-on-dot t)))
-
 (use-package rainbow-delimiters :ensure t)
 (use-package rainbow-mode :ensure t)
 (use-package rust-mode :defer t)
