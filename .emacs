@@ -68,7 +68,8 @@
 	    (exec-path-from-shell-initialize)))
 (use-package flycheck
   :ensure t
-  :config (add-hook 'after-init-hook #'global-flycheck-mode))
+  :init
+  (add-hook 'after-init-hook #'global-flycheck-mode))
 (use-package go-mode :defer t)
 (use-package guide-key
   :ensure t
@@ -87,48 +88,68 @@
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (setq haskell-font-lock-symbols t)
   (use-package ghc :ensure t))
+
 (use-package helm
   :ensure t
   :defer t
   :config (use-package helm-config))
+
 (use-package imenu-anywhere
   :ensure t
   :bind ("C-c i" . imenu-anywhere))
+
 (use-package idris-mode :defer t)
+
 (use-package js2-mode
   :defer t
   :ensure t
   :config
   (add-hook 'js2-mode-hook
-	    (lambda () (push '("function" . ?λ) prettify-symbols-alist))))
-(use-package json-mode :ensure t :defer t)
+   (lambda () (push '("function" . ?λ) prettify-symbols-alist))))
+
+(use-package json-mode
+  :ensure t
+  :bind ("C-c C-f" . json-reformat-region)
+  :config
+  (setq json-reformat:indent-width 2))
+
 (use-package magit :ensure t)
+
 (use-package markdown-mode :ensure t :defer t)
+
 (use-package multiple-cursors
   :ensure t
   :config (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines))
+
 (use-package neotree
   :ensure t
   :bind ([f8] . neotree-toggle))
+
 (use-package nix-mode :ensure t :defer t)
+
 (use-package protobuf-mode :defer t)
+
 (use-package puppet-mode :defer t)
+
 (use-package purescript-mode :defer t)
+
 (use-package python-mode
   :ensure t
-  :after exec-path-from-shell
-  :defer t
+  :mode ("\\.py\\'" . python-mode)
+  :interpreter ("python" . python-mode)
+  :after company
   :config
-  (exec-path-from-shell-copy-env "CONDA_ENV_PATH")
+  (add-hook 'python-mode-hook
+   (lambda ()
+     (exec-path-from-shell-copy-env "CONDA_ENV_PATH")
+     (company-mode -1)))
   (use-package virtualenv :ensure t)
   (use-package jedi
-    :after company
-    :defer t
     :ensure t
     :config
-    (remove-hook 'after-init-hook #'global-flycheck-mode)
     (add-hook 'python-mode-hook 'jedi:setup)
     (setq jedi:complete-on-dot t)))
+
 (use-package rainbow-delimiters :ensure t)
 (use-package rainbow-mode :ensure t)
 (use-package rust-mode :defer t)
