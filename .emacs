@@ -32,15 +32,24 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+
 (eval-when-compile (require 'use-package))
 ;; My stuff first
 (use-package misc
   :defer t
+  :after exec-path-from-shell
   :load-path "site-lisp/misc.el"
   :bind ("s-<insert>" . paste-primary-selection)
-  :config (add-hook 'before-save-hook 'delete-trailing-whitespace))
+  :config
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  ;; When in mac application
+  (when (memq window-system '(mac ns))
+    (global-unset-key "\C-x\C-c")
+    (exec-path-from-shell-initialize)))
+
 ;; Then the rest
 (use-package ag :ensure t)
+
 (use-package agda2
   :mode ("\\.agda\\'" . agda2-mode)
   :defer t
@@ -49,38 +58,48 @@
   (text-scale-adjust +1))
 
 (use-package auctex :ensure t :defer t)
+
 (use-package clojure-mode
   :defer t
   :config
   (use-package smartparens-config)
   (use-package cider :defer t)
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode))
+
 (use-package coffee-mode
   :defer t
   :config (setq coffee-tab-width 2))
+
 (use-package company
   :ensure t
   :init
   (setq company-idle-delay 0.2)
   (add-hook 'after-init-hook #'global-company-mode))
+
 (use-package csv-mode :ensure t :defer t)
+
 (use-package dockerfile-mode :ensure t :defer t)
+
 (use-package easy-kill :ensure t)
+
 (use-package erlang :defer t)
-(use-package exec-path-from-shell
-  :config (when (memq window-system '(mac ns))
-	    (exec-path-from-shell-initialize)))
+
+(use-package exec-path-from-shell :ensure t)
+
 (use-package flycheck
   :ensure t
   :init
   (add-hook 'after-init-hook #'global-flycheck-mode))
+
 (use-package go-mode :defer t)
+
 (use-package guide-key
   :ensure t
   :config
   (setq guide-key/guide-key-sequence '("C-x r" "C-x 4"))
   (setq guide-key/idle-delay 1.0)
   (guide-key-mode 1))
+
 (use-package haskell-mode
   :ensure t
   :bind (("C-," . haskell-move-nested-left)
@@ -155,15 +174,22 @@
     (setq jedi:complete-on-dot t)))
 
 (use-package rainbow-delimiters :ensure t)
+
 (use-package rainbow-mode :ensure t)
+
 (use-package rust-mode :defer t)
+
 (use-package sh-script
   :defer t
   :mode ("\\.zsh\\'" . sh-mode)
   :config (setq sh-indentation 2 sh-basic-offset 2))
+
 (use-package smartparens :ensure t)
+
 (use-package scss-mode :ensure t :defer t)
+
 (use-package tabbar :ensure t)
+
 (use-package tidal
   :disabled t
   :after haskell-mode
@@ -176,11 +202,16 @@
   (if (= (length (shell-command-to-string "ps cax | grep dirt")) 0)
       (sleep-for 1)
     (call-process-shell-command "cd ~/composition/bin/Dirt/dirt &")))
+
 (use-package todotxt :mode ("\\todo.txt\\'" . todotxt-mode))
+
 (use-package tuareg :defer t)
+
 (use-package twittering-mode :ensure t :defer t)
+
 (use-package yaml-mode :ensure t :defer t)
-(use-package yasnippet :ensure t :defer t)
+
+(use-package yasnippet :disabled t :ensure t :defer t)
 
 (provide '.emacs)
 ;;; .emacs ends here
