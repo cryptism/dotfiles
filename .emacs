@@ -43,7 +43,11 @@
 (use-package ag :ensure t)
 (use-package agda2
   :mode ("\\.agda\\'" . agda2-mode)
-  :defer t)
+  :defer t
+  :config
+  ;; Give it a closer look!
+  (text-scale-adjust +1))
+
 (use-package auctex :ensure t :defer t)
 (use-package clojure-mode
   :defer t
