@@ -108,8 +108,23 @@
   (bind-key "C-<" '(kbd "C-u C-,"))
   (bind-key "C->" '(kbd "C-u C-."))
   :config
+  (add-hook 'haskell-mode-hook 'haskell-doc-mode)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode)
   (setq haskell-font-lock-symbols t)
+  (custom-set-variables
+   '(haskell-process-suggest-remove-import-lines t)
+   '(haskell-process-auto-import-loaded-modules t)
+   '(haskell-process-log t)
+   '(haskell-process-type (quote stack-ghci))
+   '(haskell-process-path-ghci "stack")
+   '(haskell-process-args-ghci "ghci"))
+  (use-package company-ghci
+    :ensure t
+    :after company
+    :config
+    (push 'company-ghci company-backends))
   (use-package ghc :ensure t))
 
 (use-package helm
@@ -132,6 +147,7 @@
 
 (use-package json-mode
   :ensure t
+  :defer
   :bind ("C-c C-f" . json-reformat-region)
   :config
   (setq json-reformat:indent-width 2))
@@ -154,7 +170,15 @@
 
 (use-package puppet-mode :defer t)
 
-(use-package purescript-mode :defer t)
+(use-package purescript-mode
+  :after flycheck
+  :bind (("C-," . purescript-move-nested-left)
+	 ("C-." . purescript-move-nested-right))
+  :init
+  (bind-key "C-<" '(kbd "C-u C-,"))
+  (bind-key "C->" '(kbd "C-u C-."))
+  :config
+  (add-hook 'purescript-mode-hook #'turn-on-purescript-indentation))
 
 (use-package python-mode
   :ensure t
@@ -171,7 +195,8 @@
     :ensure t
     :config
     (add-hook 'python-mode-hook 'jedi:setup)
-    (setq jedi:complete-on-dot t)))
+    (setq jedi:complete-on-dot t)
+    (setq jedi:get-in-function-call-delay 500)))
 
 (use-package rainbow-delimiters :ensure t)
 
