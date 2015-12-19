@@ -12,6 +12,7 @@
 (menu-bar-mode -1)
 (setq vc-follow-symlinks t)
 (scroll-bar-mode -1)
+(setq column-number-mode t)
 (set-frame-parameter (selected-frame) 'alpha '(85 70))
 (setq inhibit-startup-screen t)
 (defvar mac-option-key-is-meta)
