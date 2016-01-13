@@ -1,39 +1,40 @@
-;;; package --- Summary
+;;; Package --- Summary
 ;;; Commentary:
 ;;; Code:
 (defvar *emacs-load-start* (current-time))
 (defvar dotfiles-dir)
-(setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
+(setq dotfiles-dir
+  (file-name-directory (or load-file-name (buffer-file-name))))
 (prefer-coding-system 'utf-8)
 (setq buffer-file-coding-system 'utf-8)
 
 ;; Bootstrap
 (require 'package)
 (setq package-archives
-      (append '(("org"  . "http://orgmode.org/elpa/")
-		("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
-		("melpa"        . "http://melpa.milkbox.net/packages/")
-		("marmalade"    . "http://marmalade-repo.org/packages/"))
-	      package-archives))
+  (append '(("org" . "http://orgmode.org/elpa/")
+	    ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
+	    ("melpa" . "http://melpa.milkbox.net/packages/")
+	    ("marmalade" . "http://marmalade-repo.org/packages/"))
+	  package-archives))
 (package-initialize)
 
+(setq vc-follow-symlinks t)
+(setq-default yank-excluded-properties 't)
+(setq column-number-mode t)
+(setq inhibit-startup-screen t)
+(defvar mac-option-key-is-meta t)
+(setq mac-right-option-modifier nil)
+(setq ring-bell-function #'ignore)
+
 ;; Display crap
-(eval-and-compile
-  (setq-default yank-excluded-properties 't)
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
-  (setq vc-follow-symlinks t)
-  (scroll-bar-mode -1)
-  (setq column-number-mode t)
-  (set-frame-parameter (selected-frame) 'alpha '(85 70))
-  (setq inhibit-startup-screen t)
-  (defvar mac-option-key-is-meta)
-  (setq mac-option-key-is-meta t)
-  (setq mac-right-option-modifier nil)
-  (set-face-attribute 'default nil :family "Hasklig")
-  (setq ring-bell-function #'ignore)
-  (load-theme 'wheatgrass)
-  (global-prettify-symbols-mode +1))
+
+(tool-bar-mode 0)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(set-frame-parameter (selected-frame) 'alpha '(85 70))
+(set-face-attribute 'default nil :family "Hasklig")
+(load-theme 'wheatgrass)
+(global-prettify-symbols-mode +1)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -60,13 +61,14 @@
   :mode ("\\.agda\\'" . agda2-mode)
   :defer t
   :config
+  (defvar agda2-lsb '((t (:foreground "light slate blue"))))
   (custom-set-faces
-   '(agda2-highlight-datatype-face ((t (:foreground "light slate blue"))))
-   '(agda2-highlight-function-face ((t (:foreground "light slate blue"))))
-   '(agda2-highlight-postulate-face ((t (:foreground "light slate blue"))))
-   '(agda2-highlight-primitive-face ((t (:foreground "light slate blue"))))
-   '(agda2-highlight-primitive-type-face ((t (:foreground "light slate blue"))))
-   '(agda2-highlight-record-face ((t (:foreground "light slate blue"))))))
+    '(agda2-highlight-datatype-face agda2-lsb)
+    '(agda2-highlight-function-face agda2-lsb)
+    '(agda2-highlight-postulate-face agda2-lsb)
+    '(agda2-highlight-primitive-face  agda2-lsb)
+    '(agda2-highlight-primitive-type-face agda2-lsb)
+    '(agda2-highlight-record-face agda2-lsb)))
 
 (use-package auctex :ensure t :defer t)
 
@@ -95,11 +97,14 @@
 (use-package easy-kill :ensure t :defer t)
 
 (use-package erlang :defer t)
+(use-package esup :ensure t)
 
 (use-package exec-path-from-shell :ensure t :defer t)
 
 (use-package flycheck
   :ensure t
+  :defer t
+  :defer t
   :init
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
@@ -107,6 +112,7 @@
 
 (use-package guide-key
   :ensure t
+  :defer t
   :config
   (setq guide-key/guide-key-sequence '("C-x r" "C-x 4"))
   (setq guide-key/idle-delay 1.0)
@@ -125,42 +131,45 @@
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode)
   (custom-set-variables
-   '(haskell-process-suggest-remove-import-lines t)
-   '(haskell-process-auto-import-loaded-modules t)
-   '(haskell-process-log t)
-   '(haskell-process-type (quote stack-ghci))
-   '(haskell-process-path-ghci "stack")
-   '(haskell-process-args-ghci "ghci"))
-  (defvar haskell-ligature-list
-	       '(("->" . "")
-		 ("<-" . "")
-		 ("=>" . "")
-		 ("!!" . "")
-		 ("&&" . "")
-		 ("||" . "")
-		 ("-<" . "")
-		 (">-" . "")
-		 ("::" . "")
-		 ("++" . "")
-		 (".." . "")
-		 ("..." . "")
-		 ("<$>" . "")
-		 ("<>" . "")
-		 ("<*" . "")
-		 ("*>" . "")
-		 ("***" . "")
-		 ("<*>" . "")
-		 ("<|" . "")
-		 ("<|>" . "")
-		 ("<+>" . "")
-		 (">>" . "")
-		 ("<<" . "")
-		 ("<<<" . "")
-		 (">>>" . "")
-		 (">>=" . "")
-		 ("=<<" . "")))
-  (setq haskell-font-lock-symbols-alist
-	(append haskell-ligature-list haskell-font-lock-symbols-alist))
+    '(haskell-process-suggest-remove-import-lines t)
+    '(haskell-process-auto-import-loaded-modules t)
+    '(haskell-process-log t)
+    '(haskell-process-type (quote stack-ghci))
+    '(haskell-process-path-ghci "stack")
+    '(haskell-process-args-ghci "ghci"))
+
+  (when (memq window-system '(mac ns x))
+    (defvar haskell-ligature-list
+      '(("->" . "")
+	("<-" . "")
+	("=>" . "")
+	("!!" . "")
+	("&&" . "")
+	("||" . "")
+	("-<" . "")
+	(">-" . "")
+	("::" . "")
+	("++" . "")
+	("+++" . "")
+	(".." . "")
+	("..." . "")
+	("<$>" . "")
+	("<>" . "")
+	("<*" . "")
+	("*>" . "")
+	("***" . "")
+	("<*>" . "")
+	("<|" . "")
+	("<|>" . "")
+	("<+>" . "")
+	(">>" . "")
+	("<<" . "")
+	("<<<" . "")
+	(">>>" . "")
+	(">>=" . "")
+	("=<<" . "")))
+    (setq haskell-font-lock-symbols-alist
+      (append haskell-ligature-list haskell-font-lock-symbols-alist)))
   (setq haskell-font-lock-symbols t)
   (use-package company-ghci
     :ensure t
@@ -194,12 +203,13 @@
   :config
   (setq json-reformat:indent-width 2))
 
-(use-package magit :ensure t)
+(use-package magit :ensure t :defer t)
 
 (use-package markdown-mode :ensure t :defer t)
 
 (use-package multiple-cursors
   :ensure t
+  :defer t
   :config (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines))
 
 (use-package neotree
@@ -229,9 +239,9 @@
   :after company
   :config
   (add-hook 'python-mode-hook
-   (lambda ()
-     (exec-path-from-shell-copy-env "CONDA_ENV_PATH")
-     (company-mode -1)))
+    (lambda ()
+      (exec-path-from-shell-copy-env "CONDA_ENV_PATH")
+      (company-mode -1)))
   (use-package virtualenv :ensure t)
   (use-package jedi
     :ensure t
