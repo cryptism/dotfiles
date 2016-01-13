@@ -18,6 +18,7 @@
 (defvar mac-option-key-is-meta)
 (setq mac-option-key-is-meta t)
 (setq mac-right-option-modifier nil)
+(set-face-attribute 'default nil :family "Hasklig")
 (setq ring-bell-function #'ignore)
 (load-theme 'wheatgrass)
 (global-prettify-symbols-mode +1)
@@ -49,7 +50,7 @@
     (exec-path-from-shell-initialize)))
 
 ;; Then the rest
-(use-package ag :ensure t)
+(use-package ag :ensure t :defer t)
 
 (use-package agda2-mode
   :mode ("\\.agda\\'" . agda2-mode)
@@ -78,6 +79,7 @@
 
 (use-package company
   :ensure t
+  :defer t
   :init
   (setq company-idle-delay 0.2)
   (add-hook 'after-init-hook #'global-company-mode))
@@ -86,11 +88,11 @@
 
 (use-package dockerfile-mode :ensure t :defer t)
 
-(use-package easy-kill :ensure t)
+(use-package easy-kill :ensure t :defer t)
 
 (use-package erlang :defer t)
 
-(use-package exec-path-from-shell :ensure t)
+(use-package exec-path-from-shell :ensure t :defer t)
 
 (use-package flycheck
   :ensure t
@@ -118,14 +120,58 @@
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode)
-  (setq haskell-font-lock-symbols t)
   (custom-set-variables
    '(haskell-process-suggest-remove-import-lines t)
    '(haskell-process-auto-import-loaded-modules t)
    '(haskell-process-log t)
    '(haskell-process-type (quote stack-ghci))
    '(haskell-process-path-ghci "stack")
-   '(haskell-process-args-ghci "ghci"))
+   '(haskell-process-args-ghci "ghci")
+   '(haskell-font-lock-symbols-alist
+     (quote (("\\" . "λ")
+	     ("not" . "¬")
+	     ("->" . "")
+	     ("<-" . "")
+	     ("=>" . "")
+	     ("()" . "∅")
+	     ("==" . "≡")
+	     ("/=" . "≢")
+	     (">=" . "≥")
+	     ("<=" . "≤")
+	     ("!!" . "")
+	     ("&&" . "")
+	     ("||" . "")
+	     ("sqrt" . "√")
+	     ("undefined" . "⊥")
+	     ("pi" . "π")
+	     ("~>" . "⇝")
+	     ("-<" . "")
+	     (">-" . "")
+	     ("::" . "")
+	     ("++" . "")
+	     (".." . "")
+	     ("..." . "")
+	     ("<$>" . "")
+	     ("<>" . "")
+	     ("<*" . "")
+	     ("*>" . "")
+	     ("***" . "")
+	     ("<*>" . "")
+	     ("<|" . "")
+	     ("<|>" . "")
+	     ("<+>" . "")
+	     (">>" . "")
+	     ("<<" . "")
+	     ("<<<" . "")
+	     (">>>" . "")
+	     (">>=" . "")
+	     ("=<<" . "")
+	     ("." "∘" ; "○"
+	      ;; Need a predicate here to distinguish the . used by
+	      ;; forall <foo> . <bar>.
+	      haskell-font-lock-dot-is-not-composition)
+	     ("forall" . "∀")))))
+  (setq haskell-font-lock-symbols t)
   (use-package company-ghci
     :ensure t
     :after company
@@ -215,7 +261,7 @@
   :mode ("\\.zsh\\'" . sh-mode)
   :config (setq sh-indentation 2 sh-basic-offset 2))
 
-(use-package smartparens :ensure t)
+(use-package smartparens :ensure t :defer t)
 
 (use-package scss-mode :ensure t :defer t)
 
