@@ -10,49 +10,52 @@
 
 ;; Bootstrap
 (setq package-enable-at-startup nil)
-(require 'package)
-(setq package-archives
-  (append '(("org" . "http://orgmode.org/elpa/")
-	    ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
-	    ("melpa" . "http://melpa.milkbox.net/packages/")
-	    ("marmalade" . "http://marmalade-repo.org/packages/"))
-	  package-archives))
-(package-initialize)
-
 (setq vc-follow-symlinks t)
 (setq-default yank-excluded-properties 't)
 (setq column-number-mode t)
 (setq inhibit-startup-screen t)
 (setq ring-bell-function #'ignore)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(when (memq window-system '(mac ns))
+(unless (eq window-system 'x)
   (tool-bar-mode 0)
   (menu-bar-mode 0)
-  (scroll-bar-mode 0)
-  (defvar mac-option-key-is-meta t)
-  (defvar mac-right-option-modifier nil)
+  (scroll-bar-mode 0))
+
+(load-theme 'wheatgrass)
+(when (eq window-system 'ns)
+  (setq-default mac-option-key-is-meta t)
+  (setq-default mac-right-option-modifier nil)
   (set-face-attribute 'default nil :family "Hasklig")
   (global-unset-key "\C-x\C-c"))
 
 ;; Display crap
 (set-frame-parameter (selected-frame) 'alpha '(85 70))
-(load-theme 'wheatgrass)
+
 (global-prettify-symbols-mode +1)
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
 
-(eval-when-compile (require 'use-package))
+(eval-and-compile
+  (require 'package)
+  (setq package-archives
+	(append '(("org" . "http://orgmode.org/elpa/")
+		  ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
+		  ("melpa" . "http://melpa.milkbox.net/packages/")
+		  ("marmalade" . "http://marmalade-repo.org/packages/"))
+		package-archives))
+  (package-initialize)
+
+
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+  (require 'use-package))
 ;; My stuff first
 (use-package misc
   :defer t
-  :after exec-path-from-shell
-  :load-path "site-lisp/misc.el"
-  :bind (("s-<insert>" . paste-primary-selection))
-  :config
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
-  (exec-path-from-shell-initialize))
+  :load-path "site-lisp"
+  :bind (("s-<insert>" . paste-primary-selection)
+	 ([f1] . eshell)))
 ;; Then the rest
 (use-package ag :ensure t :defer t)
 
@@ -96,15 +99,23 @@
 (use-package easy-kill :ensure t :defer t)
 
 (use-package erlang :defer t)
-(use-package esup :ensure t)
 
-(use-package exec-path-from-shell :ensure t :defer t)
+(use-package esup :ensure t :defer t)
+
+(use-package exec-path-from-shell
+  :defer t
+  :init
+  (setq exec-path-from-shell-arguments '("-l"))
+  (add-hook 'eshell-mode-hook
+    #'(lambda () (when (eq window-system 'ns)
+	      (exec-path-from-shell-initialize)))))
 
 (use-package flycheck
   :ensure t
   :defer t
-  :defer t
   :init
+  (setq flycheck-idle-change-delay 0.1)
+  (setq flycheck-display-errors-delay 0.3)
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 (use-package go-mode :defer t)
@@ -260,8 +271,6 @@
   :defer t
   :mode ("\\.zsh\\'" . sh-mode)
   :config (setq sh-indentation 2 sh-basic-offset 2))
-
-(use-package shell :bind ([f1] . shell))
 
 (use-package smartparens :ensure t :defer t)
 
