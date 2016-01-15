@@ -22,17 +22,19 @@
 (setq-default yank-excluded-properties 't)
 (setq column-number-mode t)
 (setq inhibit-startup-screen t)
-(defvar mac-option-key-is-meta t)
-(setq mac-right-option-modifier nil)
 (setq ring-bell-function #'ignore)
 
-;; Display crap
+(when (memq window-system '(mac ns))
+  (tool-bar-mode 0)
+  (menu-bar-mode 0)
+  (scroll-bar-mode 0)
+  (defvar mac-option-key-is-meta t)
+  (setq mac-right-option-modifier nil)
+  (set-face-attribute 'default nil :family "Hasklig")
+  (global-unset-key "\C-x\C-c"))
 
-(tool-bar-mode 0)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
+;; Display crap
 (set-frame-parameter (selected-frame) 'alpha '(85 70))
-(set-face-attribute 'default nil :family "Hasklig")
 (load-theme 'wheatgrass)
 (global-prettify-symbols-mode +1)
 
@@ -46,14 +48,10 @@
   :defer t
   :after exec-path-from-shell
   :load-path "site-lisp/misc.el"
-  :bind (("s-<insert>" . paste-primary-selection)
-	 ([f1] . shell))
+  :bind (("s-<insert>" . paste-primary-selection))
   :config
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
-  ;; When in mac application
-  (when (memq window-system '(mac ns))
-    (global-unset-key "\C-x\C-c")
-    (exec-path-from-shell-initialize)))
+  (exec-path-from-shell-initialize))
 ;; Then the rest
 (use-package ag :ensure t :defer t)
 
@@ -250,9 +248,9 @@
     (setq jedi:complete-on-dot t)
     (setq jedi:get-in-function-call-delay 500)))
 
-(use-package rainbow-delimiters :ensure t)
+(use-package rainbow-delimiters :ensure t :defer t)
 
-(use-package rainbow-mode :ensure t)
+(use-package rainbow-mode :ensure t :defer t)
 
 (use-package rust-mode :defer t)
 
@@ -260,6 +258,8 @@
   :defer t
   :mode ("\\.zsh\\'" . sh-mode)
   :config (setq sh-indentation 2 sh-basic-offset 2))
+
+(use-package shell :bind ([f1] . shell))
 
 (use-package smartparens :ensure t :defer t)
 
