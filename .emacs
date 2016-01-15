@@ -9,6 +9,7 @@
 (setq buffer-file-coding-system 'utf-8)
 
 ;; Bootstrap
+(setq package-enable-at-startup nil)
 (require 'package)
 (setq package-archives
   (append '(("org" . "http://orgmode.org/elpa/")
@@ -29,7 +30,7 @@
   (menu-bar-mode 0)
   (scroll-bar-mode 0)
   (defvar mac-option-key-is-meta t)
-  (setq mac-right-option-modifier nil)
+  (defvar mac-right-option-modifier nil)
   (set-face-attribute 'default nil :family "Hasklig")
   (global-unset-key "\C-x\C-c"))
 
@@ -136,7 +137,7 @@
     '(haskell-process-path-ghci "stack")
     '(haskell-process-args-ghci "ghci"))
 
-  (when (memq window-system '(mac ns x))
+  (when (memq window-system '(mac ns))
     (defvar haskell-ligature-list
       '(("->" . "")
 	("<-" . "")
@@ -222,6 +223,7 @@
 
 (use-package purescript-mode
   :after flycheck
+  :ensure t
   :bind (("C-," . purescript-move-nested-left)
 	 ("C-." . purescript-move-nested-right))
   :init
@@ -265,7 +267,7 @@
 
 (use-package scss-mode :ensure t :defer t)
 
-(use-package tabbar :ensure t)
+(use-package tabbar :ensure t :defer t)
 
 (use-package tidal
   :disabled t

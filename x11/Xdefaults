@@ -2,18 +2,18 @@ URxvt.perl-ext-common:  default,tabbedex
 URxvt*foreground: gold
 URxvt*depth: 32
 URxvt*background: rgba:0000/0000/0200/c800
-
 URxvt.fading: 25
-URxvt*font: xft:DejaVu Sans Mono:style=Book:antialias=false:size=10,xft:Unifont
-
-
+URxvt*font: xft:DejaVu Sans Mono:style=Book:antialias=false:size=9,xft:Unifont
 URxvt*saveLines:32767
 URxvt*scrollBar: false
-
 URxvt.tabbed.autohide: yes
 URxvt.tabbed.new-button: no
 URxvt.tabbed.title: yes
-
 URxvt*keysym.M-S-Up: perl:tabbedex:new_tab
 URxvt*keysym.M-S-Left: perl:tabbedex:next_tab
 URxvt*keysym.M-S-Right: perl:tabbedex:prev_tab
+
+Emacs*toolBar: 0
+Emacs*verticalScrollBars: off
+Emacs*menuBar: 0
+Emacs*font: hasklig-10
