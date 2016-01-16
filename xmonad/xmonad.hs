@@ -8,7 +8,7 @@ import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
 
 myManageHook = composeAll [
-    className =? "Pidgin" --> doShift "2:im" ]
+    resource =? "tweetdeck.twitter.com" --> doShift "2:im" ]
 
 main = do
     xmproc <- spawnPipe "feh --bg-scale ~/.local/share/backgrounds/bust.png"
@@ -19,7 +19,7 @@ main = do
         , terminal = "urxvt -mod mod1"
         , workspaces = ["1:main", "2:im", "3:media"] ++ map show([4..9] ++ [0])
         , startupHook = do
-              spawn "pidgin"
+              spawn "chromium --app=https://tweetdeck.twitter.com --disable-overlay-scrollbar"
               spawn "xset r rate 200 20"
               setDefaultCursor xC_left_ptr
               spawn "xscreensaver -no-splash"

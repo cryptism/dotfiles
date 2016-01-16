@@ -45,17 +45,18 @@
 		package-archives))
   (package-initialize)
 
-
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
   (require 'use-package))
+
 ;; My stuff first
 (use-package misc
   :defer t
   :load-path "site-lisp"
   :bind (("s-<insert>" . paste-primary-selection)
 	 ([f1] . eshell)))
+
 ;; Then the rest
 (use-package ag :ensure t :defer t)
 
@@ -148,6 +149,7 @@
     '(haskell-process-path-ghci "stack")
     '(haskell-process-args-ghci "ghci"))
 
+  ;; Only Cocoa Emacs seems to support this!
   (when (memq window-system '(mac ns))
     (defvar haskell-ligature-list
       '(("->" . "")
@@ -184,7 +186,7 @@
   (use-package company-ghci
     :ensure t
     :after company
-    :config
+    :init
     (push 'company-ghci company-backends))
   (use-package ghc :ensure t))
 
