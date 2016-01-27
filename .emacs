@@ -34,15 +34,14 @@
 
 (global-prettify-symbols-mode +1)
 
-
 (eval-and-compile
   (require 'package)
   (setq package-archives
-	(append '(("org" . "http://orgmode.org/elpa/")
-		  ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
-		  ("melpa" . "http://melpa.milkbox.net/packages/")
-		  ("marmalade" . "http://marmalade-repo.org/packages/"))
-		package-archives))
+    (append '(("org" . "http://orgmode.org/elpa/")
+	      ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
+	      ("melpa" . "http://melpa.milkbox.net/packages/")
+	      ("marmalade" . "http://marmalade-repo.org/packages/"))
+	    package-archives))
   (package-initialize)
 
   (unless (package-installed-p 'use-package)
@@ -80,7 +79,10 @@
   :config
   (use-package smartparens-config)
   (use-package cider :defer t)
-  (add-hook 'clojure-mode-hook #'smartparens-strict-mode))
+  (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
+  (add-hook 'clojure-mode-hook
+    #'(lambda () (when (eq window-system 'ns)
+	      (exec-path-from-shell-initialize)))))
 
 (use-package coffee-mode
   :defer t
@@ -132,24 +134,30 @@
 (use-package haskell-mode
   :ensure t
   :bind (("C-," . haskell-move-nested-left)
-	 ("C-." . haskell-move-nested-right))
+	 ("C-." . haskell-move-nested-right)
+	 ("M-<up>" . haskell-interactive-mode-history-previous)
+	 ("M-<down>" . haskell-interactive-mode-history-previous))
   :init
   (bind-key "C-<" '(kbd "C-u C-,"))
   (bind-key "C->" '(kbd "C-u C-."))
   :config
+  (add-hook 'haskell-mode-hook
+    #'(lambda () (when (eq window-system 'ns)
+	      (exec-path-from-shell-initialize))))
   (add-hook 'haskell-mode-hook 'haskell-doc-mode)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode)
   (custom-set-variables
-    '(haskell-process-suggest-remove-import-lines t)
-    '(haskell-process-auto-import-loaded-modules t)
-    '(haskell-process-log t)
-    '(haskell-process-type (quote stack-ghci))
-    '(haskell-process-path-ghci "stack")
-    '(haskell-process-args-ghci "ghci"))
+   '(haskell-process-suggest-remove-import-lines t)
+   '(haskell-process-auto-import-loaded-modules t)
+   '(haskell-process-log t)
+   '(haskell-interactive-popup-errors nil)
+   '(haskell-process-type (quote stack-ghci))
+   '(haskell-font-lock-symbols t)
+   '(haskell-process-path-ghci "stack")
+   '(haskell-process-args-ghci "ghci"))
 
-  ;; Only Cocoa Emacs seems to support this!
   (when (memq window-system '(mac ns))
     (defvar haskell-ligature-list
       '(("->" . "")
@@ -181,13 +189,14 @@
 	(">>=" . "")
 	("=<<" . "")))
     (setq haskell-font-lock-symbols-alist
-      (append haskell-ligature-list haskell-font-lock-symbols-alist)))
-  (setq haskell-font-lock-symbols t)
+      (append haskell-ligature-list haskell-font-lock-symbols-alist))
+    (setq haskell-font-lock-keywords
+      (haskell-font-lock-keywords-create nil)))
+
   (use-package company-ghci
     :ensure t
     :after company
-    :init
-    (push 'company-ghci company-backends))
+    :init (push 'company-ghci company-backends))
   (use-package ghc :ensure t))
 
 (use-package helm
@@ -210,10 +219,8 @@
 
 (use-package json-mode
   :ensure t
-  :defer
   :bind ("C-c C-f" . json-reformat-region)
-  :config
-  (setq json-reformat:indent-width 2))
+  :config (setq json-reformat:indent-width 2))
 
 (use-package magit :ensure t :defer t)
 
