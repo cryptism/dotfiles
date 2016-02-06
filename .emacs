@@ -17,37 +17,34 @@
 (setq ring-bell-function #'ignore)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(unless (eq window-system 'x)
+(when (memq window-system '(ns mac))
+  (setq-default mac-option-key-is-meta t)
+  (setq-default mac-right-option-modifier nil)
+  (set-face-attribute 'default nil :family "Hasklig")
+  (global-unset-key "\C-x\C-c")
   (tool-bar-mode 0)
   (menu-bar-mode 0)
   (scroll-bar-mode 0))
 
-(load-theme 'wheatgrass)
-(when (eq window-system 'ns)
-  (setq-default mac-option-key-is-meta t)
-  (setq-default mac-right-option-modifier nil)
-  (set-face-attribute 'default nil :family "Hasklig")
-  (global-unset-key "\C-x\C-c"))
-
 ;; Display crap
-(set-frame-parameter (selected-frame) 'alpha '(85 70))
+;(set-frame-parameter (selected-frame) 'alpha '(85 70))
 
 (global-prettify-symbols-mode +1)
 
-(eval-and-compile
-  (require 'package)
-  (setq package-archives
-    (append '(("org" . "http://orgmode.org/elpa/")
-	      ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
-	      ("melpa" . "http://melpa.milkbox.net/packages/")
-	      ("marmalade" . "http://marmalade-repo.org/packages/"))
-	    package-archives))
-  (package-initialize)
+(require 'package)
+(setq package-archives
+  '(("gnu" . "http://elpa.gnu.org/packages/")
+    ("org" . "http://orgmode.org/elpa/")
+    ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
+    ("melpa" . "http://melpa.milkbox.net/packages/")
+    ("marmalade" . "http://marmalade-repo.org/packages/")))
+(package-initialize)
 
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-  (require 'use-package))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(require 'use-package)
 
 ;; My stuff first
 (use-package misc
@@ -97,6 +94,11 @@
 
 (use-package csv-mode :ensure t :defer t)
 
+(use-package darcula-theme
+  :ensure t
+  :defer f
+  :init (require 'darcula-theme))
+
 (use-package dockerfile-mode :ensure t :defer t)
 
 (use-package easy-kill :ensure t :defer t)
@@ -135,6 +137,7 @@
   :ensure t
   :bind (("C-," . haskell-move-nested-left)
 	 ("C-." . haskell-move-nested-right)
+	 ("C-c C-t" . haskell-doc-show-type)
 	 ("M-<up>" . haskell-interactive-mode-history-previous)
 	 ("M-<down>" . haskell-interactive-mode-history-previous))
   :init
@@ -144,9 +147,9 @@
   (add-hook 'haskell-mode-hook
     #'(lambda () (when (eq window-system 'ns)
 	      (exec-path-from-shell-initialize))))
-  (add-hook 'haskell-mode-hook 'haskell-doc-mode)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  (add-hook 'haskell-mode-hook 'haskell-doc-mode)
   (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode)
   (custom-set-variables
    '(haskell-process-suggest-remove-import-lines t)
@@ -193,9 +196,14 @@
     (setq haskell-font-lock-keywords
       (haskell-font-lock-keywords-create nil)))
 
+  (use-package flycheck-haskell
+    :ensure t
+    ;:after flycheck
+    :init (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
+
   (use-package company-ghci
     :ensure t
-    :after company
+    ;:after company
     :init (push 'company-ghci company-backends))
   (use-package ghc :ensure t))
 
@@ -281,6 +289,13 @@
   :mode ("\\.zsh\\'" . sh-mode)
   :config (setq sh-indentation 2 sh-basic-offset 2))
 
+(use-package slime
+  :ensure t
+  :defer t
+  :config
+  (setq inferior-lisp-program "/opt/sbcl/bin/sbcl")
+  (setq slime-contribs '(slime-fancy)))
+
 (use-package smartparens :ensure t :defer t)
 
 (use-package scss-mode :ensure t :defer t)
@@ -305,6 +320,8 @@
 (use-package tuareg :defer t)
 
 (use-package twittering-mode :ensure t :defer t)
+
+(use-package winner :ensure t :defer t)
 
 (use-package yaml-mode :ensure t :defer t)
 
