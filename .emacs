@@ -1,4 +1,4 @@
-;;; Package --- Summary
+;; Package --- Summary
 ;;; Commentary:
 ;;; Code:
 (defvar *emacs-load-start* (current-time))
@@ -20,11 +20,10 @@
 (when (memq window-system '(ns mac))
   (setq-default mac-option-key-is-meta t)
   (setq-default mac-right-option-modifier nil)
-  (set-face-attribute 'default nil :family "Hasklig")
-  (global-unset-key "\C-x\C-c")
+  (set-frame-font "Hasklig" t t)
   (tool-bar-mode 0)
-  (menu-bar-mode 0)
-  (scroll-bar-mode 0))
+  (scroll-bar-mode 0)
+  (global-unset-key "\C-x\C-c"))
 
 ;; Display crap
 ;(set-frame-parameter (selected-frame) 'alpha '(85 70))
@@ -38,6 +37,7 @@
     ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
     ("melpa" . "http://melpa.milkbox.net/packages/")
     ("marmalade" . "http://marmalade-repo.org/packages/")))
+(setq package-enable-at-startup nil)
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -73,9 +73,11 @@
 
 (use-package clojure-mode
   :defer t
+  :ensure t
+  :mode "\\.clj$"
   :config
-  (use-package smartparens-config)
-  (use-package cider :defer t)
+  (use-package smartparens :defer t :ensure t)
+  (use-package cider :defer t :ensure t)
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook
     #'(lambda () (when (eq window-system 'ns)
@@ -90,6 +92,7 @@
   :defer t
   :init
   (setq company-idle-delay 0.2)
+  (setq company-minimum-prefix-length 1)
   (add-hook 'after-init-hook #'global-company-mode))
 
 (use-package csv-mode :ensure t :defer t)
@@ -105,16 +108,20 @@
 
 (use-package erlang :defer t)
 
+(use-package eshell
+  :defer t
+  :init
+  (add-hook 'eshell-mode-hook
+   #'(lambda () (company-mode -1)
+	   (when (eq window-system 'ns)
+	     (exec-path-from-shell-initialize)))))
+
 (use-package esup :ensure t :defer t)
 
 (use-package exec-path-from-shell
   :defer t
   :init
-  (setq exec-path-from-shell-arguments '("-l"))
-  (add-hook 'eshell-mode-hook
-    #'(lambda () (when (eq window-system 'ns)
-	      (exec-path-from-shell-initialize)))))
-
+  (setq exec-path-from-shell-arguments '("-l")))
 (use-package flycheck
   :ensure t
   :defer t
@@ -192,9 +199,7 @@
 	(">>=" . "")
 	("=<<" . "")))
     (setq haskell-font-lock-symbols-alist
-      (append haskell-ligature-list haskell-font-lock-symbols-alist))
-    (setq haskell-font-lock-keywords
-      (haskell-font-lock-keywords-create nil)))
+      (append haskell-ligature-list haskell-font-lock-symbols-alist)))
 
   (use-package flycheck-haskell
     :ensure t
@@ -205,6 +210,9 @@
     :ensure t
     ;:after company
     :init (push 'company-ghci company-backends))
+  ;; (use-package intero
+  ;;   :ensure t
+  ;;   :init (add-hook 'haskell-mode-hook 'intero-mode))
   (use-package ghc :ensure t))
 
 (use-package helm
@@ -217,6 +225,8 @@
   :bind ("C-c i" . imenu-anywhere))
 
 (use-package idris-mode :defer t)
+
+(use-package jinja2-mode :defer t)
 
 (use-package js2-mode
   :defer t
@@ -232,7 +242,20 @@
 
 (use-package magit :ensure t :defer t)
 
-(use-package markdown-mode :ensure t :defer t)
+(use-package markdown-mode
+  :ensure t
+  :defer t
+  :config
+  (use-package flymd
+    :load-path "site-lisp/flymd/"
+    :config (defun my-flymd-browser-function (url)
+	      (let ((process-environment (browse-url-process-environment)))
+		(apply 'start-process
+		       (concat "firefox " url)
+		       nil
+		       "/usr/bin/open"
+		       (list "-a" "firefox" url))))
+    (setq flymd-browser-open-function 'my-flymd-browser-function)))
 
 (use-package multiple-cursors
   :ensure t
@@ -282,7 +305,23 @@
 
 (use-package rainbow-mode :ensure t :defer t)
 
-(use-package rust-mode :defer t)
+(use-package rust-mode
+  :defer t
+  :config
+  (use-package flycheck-rust
+    :ensure t
+    :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+  (use-package racer
+    :ensure t
+    :bind (("M-." . racer-find-definition)
+	   ("TAB" . company-indent-or-complete-common))
+    :config
+      (setq racer-cmd "/usr/local/bin/racer")
+      (setq racer-rust-src-path "~/.rust/src/")
+      (add-hook 'racer-mode-hook #'company-mode)
+      (add-hook 'racer-mode-hook #'eldoc-mode))
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (setq company-tooltip-align-annotations t))
 
 (use-package sh-script
   :defer t
@@ -317,8 +356,20 @@
 
 (use-package todotxt :mode ("\\todo.txt\\'" . todotxt-mode))
 
-(use-package tuareg :defer t)
-
+(use-package tuareg
+  :defer t
+  :after company
+  :bind ("C-c C-z" . merlin-error-prev)
+  :load-path (lambda ()
+	       (exec-path-from-shell-initialize)
+	       (setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
+	       (concat opam-share "/emacs/site-lisp"))
+  :config
+  (require 'merlin)
+  ;(add-hook 'tuareg-mode-hook 'run-ocaml)
+  (setq tuareg-interactive-program "utop")
+  (add-to-list 'company-backends 'merlin-company-backend)
+  (add-hook 'tuareg-mode-hook 'merlin-mode t))
 (use-package twittering-mode :ensure t :defer t)
 
 (use-package winner :ensure t :defer t)
