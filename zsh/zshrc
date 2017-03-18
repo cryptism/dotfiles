@@ -1,0 +1,35 @@
+source ~/.zgen.zsh
+
+zgen prezto editor key-bindings 'emacs'
+zgen prezto prompt theme 'huh'
+zgen prezto
+zgen prezto git
+zgen prezto history-substring-search
+zgen prezto command-not-found
+zgen prezto syntax-highlighting
+zgen prezto utility:ls color 'yes'
+
+if [[ `uname` == 'Darwin' ]]; then
+  zgen prezto homebrew
+  zgen prezto osx
+fi
+unalias rm
+# aliases
+. ~/.zsh_aliases
+eval "$(thefuck --alias)"
+
+alias restartaudio="sudo killall coreaudiod"
+
+killd () {
+  screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill
+}
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# Display COMMUNISM on first tab of each new window
+if [[ $ITERM_SESSION_ID == *"t0"* ]]
+then
+  imgcat ~/dotfiles/zsh/hs.gif
+fi
+eval `opam config env`
+. /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh

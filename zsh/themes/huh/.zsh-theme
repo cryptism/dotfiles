@@ -2,12 +2,17 @@
 if [[ -z ${COOL_DOG} ]]; then
    export COOL_DOG='༼´◉◞౪◟◉༽'
 fi
+function prompt_huh_setup {
+  setopt LOCAL_OPTIONS
+  domain='%n@%m'
+  COOL_DOG='༼´◉◞౪◟◉༽'
+  stuff='%{$fg_bold[cyan]%}($fg[red]${domain}%{$fg_bold[cyan]%}):'
+  PROMPT='%F{cyan}༼´◉◞౪◟◉༽ (%f%F{red}%n@%m%f%F{cyan}):%p%f %F{green}%c  %f'
 
-domain='%n@%m'
-stuff='%{$fg_bold[cyan]%}($fg[red]${domain}%{$fg_bold[cyan]%}):'
-PROMPT='%{$fg[cyan]%}$COOL_DOG %{$fg_bold[cyan]%}(%{$fg[red]%}%n@%m%{$fg_bold[cyan]%}):%{$fg_bold[cyan]%}%p %{$fg[green]%}%c $(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+  ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$fg[cyan]%}"
+  ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
+  ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[green]%}] %{$fg[yellow]%}⚡%{$reset_color%}"
+  ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}]"
+}
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$fg[cyan]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[green]%}] %{$fg[yellow]%}⚡%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}]"
+prompt_huh_setup "$@"

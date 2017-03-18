@@ -20,8 +20,9 @@
 (when (memq window-system '(ns mac))
   (setq-default mac-option-key-is-meta t)
   (setq-default mac-right-option-modifier nil)
-  (set-frame-font "Hasklig" t t)
-  (tool-bar-mode 0)
+  (setq ns-use-srgb-colorspace nil)
+  (set-frame-font "PragmataPro" t t)
+  (tool-bar-mode 1)
   (scroll-bar-mode 0)
   (global-unset-key "\C-x\C-c"))
 
@@ -37,14 +38,14 @@
     ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
     ("melpa" . "http://melpa.milkbox.net/packages/")
     ("marmalade" . "http://marmalade-repo.org/packages/")))
-(setq package-enable-at-startup nil)
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'use-package)
+(eval-when-compile
+  (require 'use-package))
 
 ;; My stuff first
 (use-package misc
@@ -68,6 +69,8 @@
     '(agda2-highlight-primitive-face  agda2-lsb)
     '(agda2-highlight-primitive-type-face agda2-lsb)
     '(agda2-highlight-record-face agda2-lsb)))
+
+(use-package ansible :defer t :ensure t)
 
 (use-package auctex :ensure t :defer t)
 
@@ -128,7 +131,12 @@
   :init
   (setq flycheck-idle-change-delay 0.1)
   (setq flycheck-display-errors-delay 0.3)
+  (setq-default flycheck-disabled-checkers
+   (append flycheck-disabled-checkers
+    '(javascript-jshint)))
   (add-hook 'after-init-hook #'global-flycheck-mode))
+
+(use-package geiser :defer t)
 
 (use-package go-mode :defer t)
 
@@ -232,8 +240,12 @@
   :defer t
   :ensure t
   :config
+  (setq js-indent-level 2)
   (add-hook 'js2-mode-hook
-   (lambda () (push '("function" . ?λ) prettify-symbols-alist))))
+   (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
+  (setq-default flycheck-disabled-checkers
+   (append flycheck-disabled-checkers
+    '(json-jsonlist))))
 
 (use-package json-mode
   :ensure t
@@ -268,9 +280,31 @@
 
 (use-package nix-mode :ensure t :defer t)
 
+(use-package smart-mode-line
+  :ensure t
+  :config
+  (progn
+    (use-package smart-mode-line-powerline-theme :ensure t)
+    (setq sml/no-confirm-load-theme t)
+    (setq sml/theme 'powerline)
+    (sml/setup)))
+
+
 (use-package protobuf-mode :defer t)
 
 (use-package puppet-mode :defer t)
+
+;; specify path to the 'psc-ide' executable
+(use-package psc-ide
+  :ensure t
+  :defer t
+  :config
+  (add-hook 'purescript-mode-hook
+    (lambda ()
+      (psc-ide-mode)
+      (company-mode)
+      (flycheck-mode)
+      (turn-on-purescript-indentation))))
 
 (use-package purescript-mode
   :after flycheck
@@ -287,19 +321,22 @@
   :ensure t
   :mode ("\\.py\\'" . python-mode)
   :interpreter ("python" . python-mode)
-  :after company
   :config
   (add-hook 'python-mode-hook
     (lambda ()
       (exec-path-from-shell-copy-env "CONDA_ENV_PATH")
       (company-mode -1)))
-  (use-package virtualenv :ensure t)
+  (use-package virtualenv :ensure t :defer t)
   (use-package jedi
     :ensure t
-    :config
-    (add-hook 'python-mode-hook 'jedi:setup)
+    :defer t
+    :init
     (setq jedi:complete-on-dot t)
-    (setq jedi:get-in-function-call-delay 500)))
+    (setq jedi:get-in-function-call-delay 500)
+    :config
+    (add-hook 'python-mode-hook 'jedi:setup)))
+
+(use-package quack :defer t)
 
 (use-package rainbow-delimiters :ensure t :defer t)
 
@@ -358,19 +395,27 @@
 
 (use-package tuareg
   :defer t
-  :after company
   :bind ("C-c C-z" . merlin-error-prev)
+  :mode ("\\.ml[ily]?$" . tuareg-mode)
   :load-path (lambda ()
 	       (exec-path-from-shell-initialize)
 	       (setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
 	       (concat opam-share "/emacs/site-lisp"))
   :config
-  (require 'merlin)
+  (use-package merlin :ensure t)
   ;(add-hook 'tuareg-mode-hook 'run-ocaml)
   (setq tuareg-interactive-program "utop")
   (add-to-list 'company-backends 'merlin-company-backend)
   (add-hook 'tuareg-mode-hook 'merlin-mode t))
+
 (use-package twittering-mode :ensure t :defer t)
+
+(use-package web-mode
+  :mode ("\\.jsx$" . web-mode)
+  :ensure t
+  :after flycheck
+  :config
+  (flycheck-add-mode 'javascript-eslint 'web-mode))
 
 (use-package winner :ensure t :defer t)
 
@@ -380,3 +425,17 @@
 
 (provide '.emacs)
 ;;; .emacs ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (web-mode quack geiser psc-ide yaml-mode virtualenv use-package twittering-mode tuareg tabbar smartparens smart-mode-line-powerline-theme slime scss-mode rainbow-mode rainbow-delimiters racer python-mode purescript-mode ocp-indent nix-mode neotree multiple-cursors merlin markdown-mode magit json-mode js2-mode jinja2-mode jedi intero imenu-anywhere helm guide-key ghc flycheck-rust flycheck-haskell exec-path-from-shell esup easy-kill dockerfile-mode darcula-theme csv-mode company-ghci coffee-mode cider auctex ansible ag))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

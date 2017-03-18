@@ -1,0 +1,7 @@
+export EDITOR="/usr/local/bin/emacs"
+export PYTHONSTARTUP=~/.pythonrc
+export PATH="$HOME/.local/bin:$HOME/.npm-packages/bin:$HOME/.cargo/bin:$HOME/.cabal/bin:$HOME/.smackage/bin:/usr/local/sbin:/usr/local/texbin:$HOME/anaconda2/bin:$PATH"
+# OPAM configuration
+. ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+export HOMEBREW_NO_ANALYTICS=1 #because fuck that noise
+export HOMEBREW_CASK_OPTS="--caskroom=/usr/local/Caskroom"
