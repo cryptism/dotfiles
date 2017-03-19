@@ -1,30 +1,34 @@
 source ~/.zgen.zsh
 
 zgen prezto editor key-bindings 'emacs'
+
+zgen load "$HOME/dotfiles/zsh/themes/huh/prompt_huh_setup"
 zgen prezto prompt theme 'huh'
+zgen prezto '*:*' case-sensitive 'yes'
+zgen prezto '*:*' color 'yes'
+
 zgen prezto
 zgen prezto git
 zgen prezto history-substring-search
 zgen prezto command-not-found
 zgen prezto syntax-highlighting
-zgen prezto utility:ls color 'yes'
+
+zgen load zsh-users/zsh-syntax-highlighting
+zgen load tarruda/zsh-autosuggestions
 
 if [[ `uname` == 'Darwin' ]]; then
   zgen prezto homebrew
   zgen prezto osx
+
+  alias restartaudio="sudo killall coreaudiod"
+
+  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
 fi
 unalias rm
 # aliases
 . ~/.zsh_aliases
 eval "$(thefuck --alias)"
-
-alias restartaudio="sudo killall coreaudiod"
-
-killd () {
-  screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill
-}
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Display COMMUNISM on first tab of each new window
 if [[ $ITERM_SESSION_ID == *"t0"* && $ITERM_PROFILE == "SUMMONING BOWLS" ]]
