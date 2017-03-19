@@ -7,6 +7,8 @@
 auto-save-list
 tramp
 .\#*
+*.swp
+.netrwhist
 
 # Org-mode
 .org-id-locations
