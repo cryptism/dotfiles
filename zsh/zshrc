@@ -1,4 +1,4 @@
-source ~/.zgen.zsh
+source ~/.zgen/zgen.zsh
 
 if ! zgen saved; then
   zgen prezto editor key-bindings 'emacs'
@@ -24,11 +24,13 @@ if ! zgen saved; then
 fi
 
 #unalias rm
-. ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-. ~/.zsh_aliases
-eval "$(thefuck --alias)"
 
 if [[ `uname` == 'Darwin' ]]; then
+  . ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+  eval "$(thefuck --alias)"
+  eval `opam config env`
+  . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  . ~/.zsh_aliases
   test -e "${HOME}/.iterm2_shell_integration.zsh" &&\
     source "${HOME}/.iterm2_shell_integration.zsh"
   alias restartaudio="sudo killall coreaudiod"
@@ -36,5 +38,3 @@ if [[ `uname` == 'Darwin' ]]; then
     alias emacs=/Applications/Emacs.app/Contents/MacOS/Emacs
 fi
 
-eval `opam config env`
-. /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
