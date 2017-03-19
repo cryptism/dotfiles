@@ -32,6 +32,8 @@ if [[ `uname` == 'Darwin' ]]; then
   test -e "${HOME}/.iterm2_shell_integration.zsh" &&\
     source "${HOME}/.iterm2_shell_integration.zsh"
   alias restartaudio="sudo killall coreaudiod"
+  test -e "/Applications/Emacs.app/Contents/MacOS/Emacs" &&\
+    alias emacs=/Applications/Emacs.app/Contents/MacOS/Emacs
 fi
 
 eval `opam config env`

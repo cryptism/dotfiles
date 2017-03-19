@@ -18,13 +18,24 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (when (memq window-system '(ns mac))
-  (setq-default mac-option-key-is-meta t)
+  (setq-default mac-option-modifier 'meta)
   (setq-default mac-right-option-modifier nil)
-  (setq ns-use-srgb-colorspace nil)
+  (setq-default mac-command-modifier 'super)
+
+  (mac-auto-operator-composition-mode t)
+
+  (set-frame-parameter (selected-frame) 'alpha '(95 . 50))
   (set-frame-font "PragmataPro" t t)
-  (tool-bar-mode 1)
+  (tool-bar-mode 0)
   (scroll-bar-mode 0)
-  (global-unset-key "\C-x\C-c"))
+  (global-unset-key "\C-x\C-c")
+
+  (global-set-key (kbd "s-c") 'kill-ring-save)
+  (global-set-key (kbd "s-x") 'clipboard-kill-region)
+  (global-set-key (kbd "s-v") 'clipboard-yank)
+  (global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
+  (global-set-key (kbd "s-w") 'kill-buffer-and-window))
+
 
 ;; Display crap
 ;(set-frame-parameter (selected-frame) 'alpha '(85 70))
@@ -124,19 +135,24 @@
 (use-package exec-path-from-shell
   :defer t
   :init
-  (setq exec-path-from-shell-arguments '("-l")))
+  (setq-default exec-path-from-shell-arguments '("-l")))
+
 (use-package flycheck
   :ensure t
   :defer t
   :init
-  (setq flycheck-idle-change-delay 0.1)
-  (setq flycheck-display-errors-delay 0.3)
+  (setq-default flycheck-idle-change-delay 0.1)
+  (setq-default flycheck-display-errors-delay 0.3)
   ;(setq-default flycheck-disabled-checkers
   ;(append flycheck-disabled-checkers
   ;'(javascript-jshint)))
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
-(use-package geiser :defer t)
+(use-package geiser
+  :defer t
+  :ensure t
+  :config
+  (use-package quack :defer t :ensure t))
 
 (use-package go-mode :defer t)
 
@@ -175,39 +191,6 @@
    '(haskell-font-lock-symbols t)
    '(haskell-process-path-ghci "stack")
    '(haskell-process-args-ghci "ghci"))
-
-  (when (memq window-system '(mac ns))
-    (defvar haskell-ligature-list
-      '(("->" . "")
-	("<-" . "")
-	("=>" . "")
-	("!!" . "")
-	("&&" . "")
-	("||" . "")
-	("-<" . "")
-	(">-" . "")
-	("::" . "")
-	("++" . "")
-	("+++" . "")
-	(".." . "")
-	("..." . "")
-	("<$>" . "")
-	("<>" . "")
-	("<*" . "")
-	("*>" . "")
-	("***" . "")
-	("<*>" . "")
-	("<|" . "")
-	("<|>" . "")
-	("<+>" . "")
-	(">>" . "")
-	("<<" . "")
-	("<<<" . "")
-	(">>>" . "")
-	(">>=" . "")
-	("=<<" . "")))
-    (setq haskell-font-lock-symbols-alist
-      (append haskell-ligature-list haskell-font-lock-symbols-alist)))
 
   (use-package flycheck-haskell
     :ensure t
@@ -336,8 +319,6 @@
     :config
     (add-hook 'python-mode-hook 'jedi:setup)))
 
-(use-package quack :defer t)
-
 (use-package rainbow-delimiters :ensure t :defer t)
 
 (use-package rainbow-mode :ensure t :defer t)
@@ -423,19 +404,5 @@
 
 (use-package yasnippet :disabled t :ensure t :defer t)
 
-(provide '.emacs)
-;;; .emacs ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (web-mode quack geiser psc-ide yaml-mode virtualenv use-package twittering-mode tuareg tabbar smartparens smart-mode-line-powerline-theme slime scss-mode rainbow-mode rainbow-delimiters racer python-mode purescript-mode ocp-indent nix-mode neotree multiple-cursors merlin markdown-mode magit json-mode js2-mode jinja2-mode jedi intero imenu-anywhere helm guide-key ghc flycheck-rust flycheck-haskell exec-path-from-shell esup easy-kill dockerfile-mode darcula-theme csv-mode company-ghci coffee-mode cider auctex ansible ag))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(provide 'init)
+;;; init.el ends here
