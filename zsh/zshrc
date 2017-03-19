@@ -1,39 +1,38 @@
 source ~/.zgen.zsh
 
-zgen prezto editor key-bindings 'emacs'
+if ! zgen saved; then
+  zgen prezto editor key-bindings 'emacs'
 
-zgen load "$HOME/dotfiles/zsh/themes/huh/prompt_huh_setup"
-zgen prezto prompt theme 'huh'
-zgen prezto '*:*' case-sensitive 'yes'
-zgen prezto '*:*' color 'yes'
+  zgen load "$HOME/dotfiles/zsh/themes/huh/prompt_huh_setup"
+  zgen prezto prompt theme 'huh'
+  zgen prezto '*:*' case-sensitive 'yes'
+  zgen prezto '*:*' color 'yes'
 
-zgen prezto
-zgen prezto git
-zgen prezto history-substring-search
-zgen prezto command-not-found
-zgen prezto syntax-highlighting
+  zgen prezto
+  zgen prezto git
+  zgen prezto history-substring-search
+  zgen prezto command-not-found
+  zgen prezto syntax-highlighting
 
-zgen load zsh-users/zsh-syntax-highlighting
-zgen load tarruda/zsh-autosuggestions
+  zgen load zsh-users/zsh-syntax-highlighting
+  zgen load tarruda/zsh-autosuggestions
 
-if [[ `uname` == 'Darwin' ]]; then
-  zgen prezto homebrew
-  zgen prezto osx
-
-  alias restartaudio="sudo killall coreaudiod"
-
-  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
+  if [[ `uname` == 'Darwin' ]]; then
+    zgen prezto homebrew
+    zgen prezto osx
+  fi
 fi
-unalias rm
-# aliases
+
+#unalias rm
+. ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 . ~/.zsh_aliases
 eval "$(thefuck --alias)"
 
-# Display COMMUNISM on first tab of each new window
-if [[ $ITERM_SESSION_ID == *"t0"* && $ITERM_PROFILE == "SUMMONING BOWLS" ]]
-then
-  imgcat ~/dotfiles/zsh/hs.gif
+if [[ `uname` == 'Darwin' ]]; then
+  test -e "${HOME}/.iterm2_shell_integration.zsh" &&\
+    source "${HOME}/.iterm2_shell_integration.zsh"
+  alias restartaudio="sudo killall coreaudiod"
 fi
+
 eval `opam config env`
 . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh

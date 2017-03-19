@@ -1,0 +1,4 @@
+# Display COMMUNISM on first tab of each new window
+if [[ $ITERM_SESSION_ID == *"t0"* && $ITERM_PROFILE == "SUMMONING BOWLS" ]]; then
+  imgcat ~/dotfiles/zsh/hs.gif
+fi
