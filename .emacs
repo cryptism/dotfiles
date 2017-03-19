@@ -131,9 +131,9 @@
   :init
   (setq flycheck-idle-change-delay 0.1)
   (setq flycheck-display-errors-delay 0.3)
-  (setq-default flycheck-disabled-checkers
-   (append flycheck-disabled-checkers
-    '(javascript-jshint)))
+  ;(setq-default flycheck-disabled-checkers
+  ;(append flycheck-disabled-checkers
+  ;'(javascript-jshint)))
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 (use-package geiser :defer t)
