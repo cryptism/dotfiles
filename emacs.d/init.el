@@ -105,8 +105,8 @@
   :ensure t
   :defer t
   :init
-  (setq company-idle-delay 0.2)
-  (setq company-minimum-prefix-length 1)
+  (setq-default company-idle-delay 0.2)
+  (setq-default company-minimum-prefix-length 1)
   (add-hook 'after-init-hook #'global-company-mode))
 
 (use-package csv-mode :ensure t :defer t)
@@ -375,6 +375,7 @@
 (use-package todotxt :mode ("\\todo.txt\\'" . todotxt-mode))
 
 (use-package tuareg
+  :disabled t
   :defer t
   :bind ("C-c C-z" . merlin-error-prev)
   :mode ("\\.ml[ily]?$" . tuareg-mode)

@@ -24,6 +24,7 @@ if ! zgen saved; then
 fi
 
 #unalias rm
+unsetopt correct
 
 if [[ `uname` == 'Darwin' ]]; then
   . ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
@@ -33,8 +34,13 @@ if [[ `uname` == 'Darwin' ]]; then
   . ~/.zsh_aliases
   test -e "${HOME}/.iterm2_shell_integration.zsh" &&\
     source "${HOME}/.iterm2_shell_integration.zsh"
+
   alias restartaudio="sudo killall coreaudiod"
+
   test -e "/Applications/Emacs.app/Contents/MacOS/Emacs" &&\
     alias emacs=/Applications/Emacs.app/Contents/MacOS/Emacs
+
+  #if brew command command-not-found-init > /dev/null 2>&1
+  #then eval "$(brew command-not-found-init)"; fi
 fi
 
