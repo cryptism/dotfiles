@@ -1,0 +1,11 @@
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[user]
+	name = Joe Whittles
+	email = hello@joewhittl.es
+[core]
+	excludesfile = /Users/joe/.gitignore
+[pull]
+	rebase = true
