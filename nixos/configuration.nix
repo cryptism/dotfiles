@@ -27,12 +27,13 @@
      defaultLocale = "en_GB.UTF-8";
   };
 
-  services.mingetty.greetingLine = ''DON'T BE AFRAID TO LET YOUR BODY DIE\r\r\t${config.system.nixosVersion} (\m) - \l'';
+  services.mingetty.greetingLine = ''DON'T BE AFRAID TO LET YOUR BODY DIE\n\n\r\r\t${config.system.nixosVersion} (\m) - \l'';
 
-  environment.systemPackages = with pkgs; [     
+  environment.systemPackages = with pkgs; [
+     wget
+     iptables nmap tcpdump
      tree
      zsh
-     haskellPackages.ghc
      xcompmgr
      xfontsel
      xlsfonts
@@ -40,24 +41,29 @@
      vim
      git
      binutils
-     
-     # Apps and GUI widgets
-     haskellPackages.xmobar
-     haskellPackages.xmonad
-     haskellPackages.xmonad-contrib
-     haskellPackages.xmonad-extras
-     dmenu2
+
+     (haskellPackages.ghcWithHoogle (self: with self; [
+       cabal-install
+       ghc-mod
+       xmonad xmonad-contrib xmonad-extras
+       xmobar
+     ]))
+
+     # Applications
      emacs
      vlc
-     trayer
      chromium
      nodejs
-     arc-theme
-     arc-icon-theme
-     slack
+     vscode
+     xscreensaver
+     rxvt_unicode-with-plugins urxvt_tabbedex
+     sakura
+     hyper
+     corebird
   ];
 
   nixpkgs.config.allowUnfree = true;
+
 
   fonts = {
       enableFontDir = true;
@@ -93,9 +99,14 @@
     enable = true;
     layout = "gb";
     xkbOptions = "eurosign:e";
-    desktopManager = {
-     gnome3.enable = true;
-     default = "gnome3";
+    desktopManager = { 
+     xterm.enable = false;
+     default = "none";
+    };
+    windowManager = {
+      xmonad.enable = true;
+      xmonad.enableContribAndExtras = true;
+      default = "xmonad";
     };
     config = ''
       Section "Extensions"
@@ -108,7 +119,6 @@
     };
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers = {
     joe = {
       isNormalUser = true;
