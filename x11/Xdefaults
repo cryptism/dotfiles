@@ -1,9 +1,7 @@
 URxvt.perl-ext-common:  default,tabbedex
-URxvt*foreground: gold
 URxvt*depth: 32
 URxvt*background: rgba:0000/0000/0200/c800
-URxvt.fading: 25
-URxvt*font: xft:DejaVu Sans Mono:style=Book:antialias=false:size=9,xft:Unifont
+URxvt.fading: 0
 URxvt*saveLines:32767
 URxvt*scrollBar: false
 URxvt.tabbed.autohide: yes
@@ -12,8 +10,35 @@ URxvt.tabbed.title: yes
 URxvt*keysym.M-S-Up: perl:tabbedex:new_tab
 URxvt*keysym.M-S-Left: perl:tabbedex:next_tab
 URxvt*keysym.M-S-Right: perl:tabbedex:prev_tab
+URxvt.font: xft:Hasklig:style=Book:size=11:dpi=96:antialias=true:autohint=false,xft:Unifont
 
-Emacs*toolBar: 0
-Emacs*verticalScrollBars: off
-Emacs*menuBar: 0
-Emacs*font: hasklig-10
+Xft.font: Hasklig
+Xft.antialias: true
+Xft.autohint: false
+Xft.rgba: grb
+Xft.dpi: 96
+Xft.lcdfilter: lcddefault
+
+Emacs.toolBar: 0
+Emacs.verticalScrollBars: off
+Emacs.menuBar: 0
+
+
+*.foreground: #F9F8F2
+*.background: #282A36
+*.color0:     #000000
+*.color8:     #4D4D4D
+*.color1:     #FF5555
+*.color9:     #FF6E67
+*.color2:     #50FA7B
+*.color10:    #5AF78E
+*.color3:     #F1FA8C
+*.color11:    #F4F99D
+*.color4:     #CAA9FA
+*.color12:    #CAA9FA
+*.color5:     #FF79C6
+*.color13:    #FF92D0
+*.color6:     #8BE9FD
+*.color14:    #9AEDFE
+*.color7:     #BFBFBF
+*.color15:    #E6E6E6
