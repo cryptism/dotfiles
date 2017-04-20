@@ -1,14 +1,19 @@
-// Place your settings in this file to overwrite the default settings
 {
-  "editor.tabSize": 2,
-  "editor.detectIndentation": true,
-  "window.zoomLevel": 0,
-  "editor.fontFamily": "'Fira Code', 'Fira Mono', 'Courier New', monospace",
-  "editor.fontLigatures": true,
-  "workbench.colorTheme": "Monokai Dimmed",
-  "workbench.iconTheme": "vscode-icons",
-  "extensions.autoUpdate": true,
-  "files.associations": {
-    "*.mkd": "markdown"
-  },
+    "editor.tabSize": 2,
+    "editor.detectIndentation": true,
+    "window.zoomLevel": 0,
+    "editor.fontFamily": "'Fira Code', 'Fira Mono', 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "workbench.colorTheme": "Monokai Dimmed",
+    "workbench.iconTheme": "vscode-icons",
+    "extensions.autoUpdate": true,
+    "editor.fontSize": 13,
+    "files.associations": {
+        "*.mkd": "markdown"
+    },
+    "files.insertFinalNewline": true,
+    "vsicons.dontShowNewVersionMessage": true,
+    "eslint.autoFixOnSave": true,
+    "terminal.enableAppInsights": false,
+    "journal.base": "~/Documents/Journal"
 }

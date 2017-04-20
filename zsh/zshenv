@@ -3,3 +3,4 @@ export PYTHONSTARTUP=~/.pythonrc
 export PATH="$HOME/.local/bin:$HOME/.npm-packages/bin:$HOME/.cargo/bin:$HOME/.cabal/bin:$HOME/.smackage/bin:/usr/local/sbin:/usr/local/texbin:$HOME/anaconda2/bin:$PATH"
 export HOMEBREW_NO_ANALYTICS=1 #because fuck that noise
 export HOMEBREW_CASK_OPTS="--caskroom=/usr/local/Caskroom"
+touch ~/.zshenv.priv && source ~/.zshenv.priv
