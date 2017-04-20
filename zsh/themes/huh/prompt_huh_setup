@@ -90,10 +90,10 @@ function prompt_huh_setup {
   communism=☭
   ctxt=⊢
 
-  if [[ $ITERM_PROFILE != 'SUMMONING BOWLS' ]]; then
-    unam=''
-  else
+  if [[ $ITERM_PROFILE == 'SUMMONING BOWLS' ]]; then
     unam='%F{cyan}(%f%F{red}%n@%m%f%F{cyan})%f '
+  else
+    unam=''
   fi
 
   PROMPT='$unam%F{green}%c%f${git_info:+${(e)git_info[prompt]}}%p%f %F{yellow}$ctxt%f '
