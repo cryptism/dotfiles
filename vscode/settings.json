@@ -4,7 +4,6 @@
     "window.zoomLevel": 0,
     "editor.fontFamily": "'Fira Code', 'Fira Mono', 'Courier New', monospace",
     "editor.fontLigatures": true,
-    "workbench.colorTheme": "Monokai Dimmed",
     "workbench.iconTheme": "vscode-icons",
     "extensions.autoUpdate": true,
     "editor.fontSize": 13,
@@ -15,5 +14,9 @@
     "vsicons.dontShowNewVersionMessage": true,
     "eslint.autoFixOnSave": true,
     "terminal.enableAppInsights": false,
-    "journal.base": "~/Documents/Journal"
+    "journal.base": "~/Documents/Journal",
+    "workbench.colorTheme": "Monokai Dimmed",
+    "terminal.external.linuxExec": "gnome-terminal",
+    "terminal.integrated.shell.linux": "tmux",
+
 }
