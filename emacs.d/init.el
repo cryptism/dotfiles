@@ -277,8 +277,9 @@
     (setq sml/theme 'powerline)
     (sml/setup)))
 
-
 (use-package protobuf-mode :defer t)
+
+(use-package projectile :defer t :ensure t)
 
 (use-package puppet-mode :defer t)
 
