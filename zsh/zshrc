@@ -26,9 +26,11 @@ fi
 #unalias rm
 unsetopt correct
 
+
+eval "$(thefuck --alias)"
+
 if [[ `uname` == 'Darwin' ]]; then
   . ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-  eval "$(thefuck --alias)"
   eval `opam config env`
   . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
   . ~/.zsh_aliases
@@ -43,4 +45,4 @@ if [[ `uname` == 'Darwin' ]]; then
   #if brew command command-not-found-init > /dev/null 2>&1
   #then eval "$(brew command-not-found-init)"; fi
 fi
-
+. ~/.nix-profile/etc/profile.d/nix.sh

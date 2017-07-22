@@ -137,6 +137,11 @@
   :init
   (setq-default exec-path-from-shell-arguments '("-l")))
 
+(use-package fiplr
+  :ensure t
+  :defer t
+  :bind ([f9] . fiplr-find-file))
+
 (use-package flycheck
   :ensure t
   :defer t

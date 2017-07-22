@@ -1,7 +1,7 @@
 {
     "editor.tabSize": 2,
     "editor.detectIndentation": true,
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
     "editor.fontFamily": "'Fira Code', 'Fira Mono', 'Courier New', monospace",
     "editor.fontLigatures": true,
     "workbench.iconTheme": "vscode-icons",
@@ -10,13 +10,315 @@
     "files.associations": {
         "*.mkd": "markdown"
     },
+    "search.exclude": {
+        "**/dist": true,
+        "**/build": true
+    },
     "files.insertFinalNewline": true,
     "vsicons.dontShowNewVersionMessage": true,
     "eslint.autoFixOnSave": true,
     "terminal.enableAppInsights": false,
     "journal.base": "~/Documents/Journal",
-    "workbench.colorTheme": "Monokai Dimmed",
     "terminal.external.linuxExec": "gnome-terminal",
-    "terminal.integrated.shell.linux": "tmux",
-
+    "workbench.sideBar.location": "right",
+    "diffEditor.renderSideBySide": false,
+    "files.autoSave": "afterDelay",
+    "prettifySymbolsMode.substitutions": [
+        {
+            "language": [
+                "javascript",
+                {
+                    "pattern": "**/*.js{x}"
+                }
+            ],
+            "substitutions": [
+                {
+                    "ugly": "undefined",
+                    "pretty": "⊥"
+                },
+                {
+                    "ugly": "function",
+                    "pretty": "λ"
+                }
+            ]
+        },
+        {
+            "language": [
+                "coq",
+                {
+                    "pattern": "**/*.v"
+                }
+            ],
+            "substitutions": [
+                {
+                    "pre": "\\b",
+                    "ugly": "forall",
+                    "post": "\\b",
+                    "pretty": "∀"
+                },
+                {
+                    "pre": "\\b",
+                    "ugly": "exists",
+                    "post": "\\b",
+                    "pretty": "∃"
+                },
+                {
+                    "pre": "\\b",
+                    "ugly": "fun",
+                    "post": "\\b",
+                    "pretty": "λ"
+                },
+                {
+                    "pre": "\\b",
+                    "ugly": "False",
+                    "post": "\\b",
+                    "pretty": "⊥"
+                },
+                {
+                    "pre": "\\b",
+                    "ugly": "True",
+                    "post": "\\b",
+                    "pretty": "⊤"
+                },
+                {
+                    "pre": "\\b",
+                    "ugly": "Defined[.]",
+                    "post": "(?:$|\\s)",
+                    "pretty": "□"
+                },
+                {
+                    "pre": "\\b",
+                    "ugly": "Admitted[.]",
+                    "post": "(?:$|\\s)",
+                    "pretty": "😱"
+                },
+                {
+                    "pre": "\\b",
+                    "ugly": "Proof[.]",
+                    "post": "(?:$|\\s)",
+                    "pretty": "∵"
+                },
+                {
+                    "pre": "\\b",
+                    "ugly": "Qed[.]",
+                    "post": "(?:$|\\s)",
+                    "pretty": "∎"
+                },
+                {
+                    "ugly": "/\\\\",
+                    "pretty": "∧"
+                },
+                {
+                    "ugly": "\\\\/",
+                    "pretty": "∨"
+                }
+            ]
+        },
+        {
+            "language": "haskell",
+            "substitutions": [
+                {
+                    "ugly": "\\\\",
+                    "pretty": "λ",
+                    "post": "\\s*(?:\\w|_).*?\\s*->"
+                },
+                {
+                    "ugly": "\\(\\)",
+                    "pretty": "∅"
+                },
+                {
+                    "ugly": "sqrt\\s?",
+                    "pretty": "√",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "&&",
+                    "pretty": "∧"
+                },
+                {
+                    "ugly": "\\|\\|",
+                    "pretty": "∨"
+                },
+                {
+                    "ugly": "not\\s?",
+                    "pretty": "¬",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "alpha",
+                    "pretty": "α",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "beta",
+                    "pretty": "β",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "gamma",
+                    "pretty": "γ",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "delta",
+                    "pretty": "δ",
+                    "pre": "\\b",
+                    "post": "\\b"
+                }
+            ]
+        },
+        {
+            "language": "ocaml",
+            "substitutions": [
+                {
+                    "ugly": "fun",
+                    "pretty": "λ",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "\\[\\]",
+                    "pretty": "ε"
+                },
+                {
+                    "ugly": "sqrt\\s?",
+                    "pretty": "√",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "&&",
+                    "pretty": "∧"
+                },
+                {
+                    "ugly": "\\|\\|",
+                    "pretty": "∨"
+                },
+                {
+                    "ugly": "not\\s?",
+                    "pretty": "¬",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "alpha",
+                    "pretty": "α",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "beta",
+                    "pretty": "β",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "gamma",
+                    "pretty": "γ",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "delta",
+                    "pretty": "δ",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "List[.]for_all",
+                    "pretty": "∀",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "List[.]exists",
+                    "pretty": "∃",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "List[.]mem",
+                    "pretty": "∈",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "\\|",
+                    "pretty": "║",
+                    "pre": "^\\s+"
+                }
+            ]
+        },
+        {
+            "language": "fsharp",
+            "substitutions": [
+                {
+                    "ugly": "fun",
+                    "pretty": "λ",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "sqrt\\s?",
+                    "pretty": "√",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "&&",
+                    "pretty": "∧"
+                },
+                {
+                    "ugly": "\\|\\|",
+                    "pretty": "∨"
+                },
+                {
+                    "ugly": "alpha",
+                    "pretty": "α",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "beta",
+                    "pretty": "β",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "gamma",
+                    "pretty": "γ",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "delta",
+                    "pretty": "δ",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "List[.]forall",
+                    "pretty": "∀",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "List[.]exists",
+                    "pretty": "∃",
+                    "pre": "\\b",
+                    "post": "\\b"
+                },
+                {
+                    "ugly": "\\|",
+                    "pretty": "║",
+                    "pre": "^\\s+"
+                }
+            ]
+        }
+    ]
 }
