@@ -279,21 +279,13 @@
 
 (use-package protobuf-mode :defer t)
 
-(use-package projectile :defer t :ensure t)
+(use-package projectile
+  :defer t
+  :ensure t
+  :config
+  (use-package flx-ido :ensure t :defer t))
 
 (use-package puppet-mode :defer t)
-
-;; specify path to the 'psc-ide' executable
-(use-package psc-ide
-  :ensure t
-  :defer t
-  :config
-  (add-hook 'purescript-mode-hook
-    (lambda ()
-      (psc-ide-mode)
-      (company-mode)
-      (flycheck-mode)
-      (turn-on-purescript-indentation))))
 
 (use-package purescript-mode
   :after flycheck
@@ -304,7 +296,17 @@
   (bind-key "C-<" '(kbd "C-u C-,"))
   (bind-key "C->" '(kbd "C-u C-."))
   :config
-  (add-hook 'purescript-mode-hook #'turn-on-purescript-indentation))
+  (use-package psc-ide
+    :ensure t
+    :defer t
+    :config
+    (setq-default psc-ide-use-npm t))
+  (add-hook 'purescript-mode-hook
+    (lambda ()
+      (psc-ide-mode)
+      (company-mode)
+      (flycheck-mode)
+      (turn-on-purescript-indentation))))
 
 (use-package python-mode
   :ensure t
@@ -413,3 +415,17 @@
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (flx-ido fix-ido fiplr yaml-mode web-mode virtualenv use-package twittering-mode tuareg tabbar smartparens smart-mode-line-powerline-theme slime scss-mode rainbow-mode rainbow-delimiters racer quack python-mode purescript-mode psc-ide projectile ocp-indent nix-mode neotree multiple-cursors merlin markdown-mode magit json-mode js2-mode jinja2-mode jedi intero imenu-anywhere helm guide-key ghc geiser flycheck-rust flycheck-haskell exec-path-from-shell esup easy-kill dockerfile-mode darcula-theme csv-mode company-ghci coffee-mode cider auctex ansible ag))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

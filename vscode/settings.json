@@ -1,11 +1,12 @@
 {
     "editor.tabSize": 2,
     "editor.detectIndentation": true,
-    "window.zoomLevel": 1,
+    "window.zoomLevel": -1,
     "editor.fontFamily": "'Fira Code', 'Fira Mono', 'Courier New', monospace",
     "editor.fontLigatures": true,
     "workbench.iconTheme": "vscode-icons",
     "extensions.autoUpdate": true,
+    "editor.parameterHints": true,
     "editor.fontSize": 13,
     "files.associations": {
         "*.mkd": "markdown"
@@ -23,6 +24,11 @@
     "workbench.sideBar.location": "right",
     "diffEditor.renderSideBySide": false,
     "files.autoSave": "afterDelay",
+    "purescript.pscIdePort": 4242,
+    "purescript.pscIdeServerExe": "psc-ide-server",
+    "purescript.autoStartPscIde": true,
+    "purescript.addNpmPath": true,
+    "purescript.packagePath": "**/bower_components",
     "prettifySymbolsMode.substitutions": [
         {
             "language": [
