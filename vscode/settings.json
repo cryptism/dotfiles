@@ -1,13 +1,14 @@
 {
     "editor.tabSize": 2,
     "editor.detectIndentation": true,
-    "window.zoomLevel": -1,
+    "window.zoomLevel": 0,
     "editor.fontFamily": "'Fira Code', 'Fira Mono', 'Courier New', monospace",
     "editor.fontLigatures": true,
-    "workbench.iconTheme": "vscode-icons",
+    "workbench.iconTheme": "material-icon-theme",
     "extensions.autoUpdate": true,
     "editor.parameterHints": true,
     "editor.fontSize": 13,
+    "editor.selectionClipboard": false,
     "files.associations": {
         "*.mkd": "markdown"
     },
@@ -18,6 +19,9 @@
     "files.insertFinalNewline": true,
     "vsicons.dontShowNewVersionMessage": true,
     "eslint.autoFixOnSave": true,
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
     "terminal.enableAppInsights": false,
     "journal.base": "~/Documents/Journal",
     "terminal.external.linuxExec": "gnome-terminal",
@@ -31,30 +35,24 @@
     "purescript.packagePath": "**/bower_components",
     "prettifySymbolsMode.substitutions": [
         {
-            "language": [
-                "javascript",
-                {
-                    "pattern": "**/*.js{x}"
-                }
-            ],
+            "language": ["javascript", { "pattern": "**/*.js{x}" }],
             "substitutions": [
                 {
+                    "pre": "\\b",
+                    "post": "\\b",
                     "ugly": "undefined",
                     "pretty": "⊥"
                 },
                 {
+                    "pre": "\\b",
+                    "post": "\\b",
                     "ugly": "function",
                     "pretty": "λ"
                 }
             ]
         },
         {
-            "language": [
-                "coq",
-                {
-                    "pattern": "**/*.v"
-                }
-            ],
+            "language": ["coq", { "pattern": "**/*.v" }],
             "substitutions": [
                 {
                     "pre": "\\b",
@@ -139,14 +137,6 @@
                     "post": "\\b"
                 },
                 {
-                    "ugly": "&&",
-                    "pretty": "∧"
-                },
-                {
-                    "ugly": "\\|\\|",
-                    "pretty": "∨"
-                },
-                {
                     "ugly": "not\\s?",
                     "pretty": "¬",
                     "pre": "\\b",
@@ -196,14 +186,6 @@
                     "pretty": "√",
                     "pre": "\\b",
                     "post": "\\b"
-                },
-                {
-                    "ugly": "&&",
-                    "pretty": "∧"
-                },
-                {
-                    "ugly": "\\|\\|",
-                    "pretty": "∨"
                 },
                 {
                     "ugly": "not\\s?",
@@ -276,14 +258,6 @@
                     "post": "\\b"
                 },
                 {
-                    "ugly": "&&",
-                    "pretty": "∧"
-                },
-                {
-                    "ugly": "\\|\\|",
-                    "pretty": "∨"
-                },
-                {
                     "ugly": "alpha",
                     "pretty": "α",
                     "pre": "\\b",
@@ -326,5 +300,18 @@
                 }
             ]
         }
-    ]
+    ],
+    "workbench.activityBar.visible": true,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": false,
+        "suppressCommitNotFoundWarning": false,
+        "suppressFileNotUnderSourceControlWarning": false,
+        "suppressGitVersionWarning": false,
+        "suppressLineUncommittedWarning": false,
+        "suppressNoRepositoryWarning": false,
+        "suppressUpdateNotice": true,
+        "suppressWelcomeNotice": false
+    }
 }
