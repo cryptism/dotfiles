@@ -27,6 +27,7 @@
     "terminal.external.linuxExec": "gnome-terminal",
     "workbench.sideBar.location": "right",
     "diffEditor.renderSideBySide": false,
+    "javascript.validate.enable": false,
     "files.autoSave": "afterDelay",
     "purescript.pscIdePort": 4242,
     "purescript.pscIdeServerExe": "psc-ide-server",
