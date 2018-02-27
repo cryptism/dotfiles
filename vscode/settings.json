@@ -8,7 +8,6 @@
     "extensions.autoUpdate": true,
     "editor.parameterHints": true,
     "editor.fontSize": 13,
-    "editor.selectionClipboard": false,
     "files.associations": {
         "*.mkd": "markdown"
     },
@@ -24,7 +23,6 @@
     },
     "terminal.enableAppInsights": false,
     "journal.base": "~/Documents/Journal",
-    "terminal.external.linuxExec": "gnome-terminal",
     "workbench.sideBar.location": "right",
     "diffEditor.renderSideBySide": false,
     "javascript.validate.enable": false,
@@ -314,5 +312,6 @@
         "suppressNoRepositoryWarning": false,
         "suppressUpdateNotice": true,
         "suppressWelcomeNotice": false
-    }
+    },
+    "workbench.colorTheme": "Arc Dark",
 }

@@ -45,6 +45,6 @@ if [[ `uname` == 'Darwin' ]]; then
   #if brew command command-not-found-init > /dev/null 2>&1
   #then eval "$(brew command-not-found-init)"; fi
 fi
-. ~/.nix-profile/etc/profile.d/nix.sh
 
+. ~/.nix-profile/etc/profile.d/nix.sh
 export PATH=/home/joe/.local/bin/luna-studio:$PATH
