@@ -26,7 +26,7 @@
   (mac-auto-operator-composition-mode t)
 
   (set-frame-parameter (selected-frame) 'alpha '(95 . 50))
-  (set-frame-font "PragmataPro" t t)
+  (set-frame-font "Hasklig" t t)
   (tool-bar-mode 0)
   (scroll-bar-mode 0)
   (global-unset-key "\C-x\C-c")
@@ -46,7 +46,7 @@
 (require 'package)
 (setq package-archives
   '(("gnu" . "http://elpa.gnu.org/packages/")
-    ("org" . "http://orgmode.org/elpa/")
+    ;;("org" . "http://orgmode.org/elpa/")
     ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
     ("melpa" . "http://melpa.milkbox.net/packages/")
     ("marmalade" . "http://marmalade-repo.org/packages/")))

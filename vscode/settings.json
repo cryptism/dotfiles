@@ -2,10 +2,35 @@
     "editor.tabSize": 2,
     "editor.detectIndentation": true,
     "window.zoomLevel": 0,
-    "editor.fontFamily": "'Fira Code', 'Fira Mono', 'Courier New', monospace",
+    "editor.fontFamily": "'Iosevka', 'Fira Code', 'Fira Mono', 'Courier New', monospace",
     "editor.fontLigatures": true,
     "workbench.iconTheme": "material-icon-theme",
     "extensions.autoUpdate": true,
+    "typescript.autoImportSuggestions.enabled": false,
+    "typescript.format.enable": false,
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            { 
+                "scope": [
+                    "comment",
+                    "variable.language",
+                    "punctuation.definition.comment",
+                    "entity.name.method.js",
+                    "text.html.basic entity.other.attribute-name.html",
+                    "text.html.basic entity.other.attribute-name",
+                    "tag.decorator.js entity.name.tag.js",
+                    "tag.decorator.js punctuation.definition.tag.js",
+                    "source.js constant.other.object.key.js string.unquoted.label.js",
+                    "markup.italic",
+                    "markup.quote"
+                ],
+                "settings": {"fontStyle": ""}
+            }
+        ]
+    },
+    "code-runner.executorMap": {
+        "javascript": "babel-node"
+    },
     "editor.parameterHints": true,
     "editor.fontSize": 13,
     "files.associations": {
@@ -310,8 +335,14 @@
         "suppressGitVersionWarning": false,
         "suppressLineUncommittedWarning": false,
         "suppressNoRepositoryWarning": false,
+        "suppressResultsExplorerNotice": false,
+        "suppressShowKeyBindingsNotice": true,
         "suppressUpdateNotice": true,
         "suppressWelcomeNotice": false
     },
     "workbench.colorTheme": "Arc Dark",
+    "git.autofetch": true,
+    "diffEditor.ignoreTrimWhitespace": true,
+    "gitlens.keymap": "chorded",
+    "material-icon-theme.showUpdateMessage": false,
 }
