@@ -47,4 +47,4 @@ if [[ `uname` == 'Darwin' ]]; then
 fi
 
 #. ~/.nix-profile/etc/profile.d/nix.sh
-export PATH=/home/joe/.local/bin/luna-studio:$PATH
+###export PATH=/home/joe/.local/bin/luna-studio:$PATH

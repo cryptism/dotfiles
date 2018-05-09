@@ -26,7 +26,7 @@
   (mac-auto-operator-composition-mode t)
 
   (set-frame-parameter (selected-frame) 'alpha '(95 . 50))
-  (set-frame-font "Hasklig" t t)
+  (set-frame-font "Iosevka" t t)
   (tool-bar-mode 0)
   (scroll-bar-mode 0)
   (global-unset-key "\C-x\C-c")
@@ -49,7 +49,7 @@
     ;;("org" . "http://orgmode.org/elpa/")
     ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
     ("melpa" . "http://melpa.milkbox.net/packages/")
-    ("marmalade" . "http://marmalade-repo.org/packages/")))
+    ("marmalade" . "https://marmalade-repo.org/packages/")))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -427,7 +427,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flx-ido fix-ido fiplr yaml-mode web-mode virtualenv use-package twittering-mode tuareg tabbar smartparens smart-mode-line-powerline-theme slime scss-mode rainbow-mode rainbow-delimiters racer quack python-mode purescript-mode psc-ide projectile ocp-indent nix-mode neotree multiple-cursors merlin markdown-mode magit json-mode js2-mode jinja2-mode jedi intero imenu-anywhere helm guide-key ghc geiser flycheck-rust flycheck-haskell exec-path-from-shell esup easy-kill dockerfile-mode darcula-theme csv-mode company-ghci coffee-mode cider auctex ansible ag))))
+    (clojure-mode flx-ido fix-ido fiplr yaml-mode web-mode virtualenv use-package twittering-mode tuareg tabbar smartparens smart-mode-line-powerline-theme slime scss-mode rainbow-mode rainbow-delimiters racer quack python-mode purescript-mode psc-ide projectile ocp-indent nix-mode neotree multiple-cursors merlin markdown-mode magit json-mode js2-mode jinja2-mode jedi intero imenu-anywhere helm guide-key ghc geiser flycheck-rust flycheck-haskell exec-path-from-shell esup easy-kill dockerfile-mode darcula-theme csv-mode company-ghci coffee-mode cider auctex ansible ag))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

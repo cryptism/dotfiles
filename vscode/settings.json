@@ -4,7 +4,7 @@
     "window.zoomLevel": 0,
     "editor.fontFamily": "'Iosevka', 'Fira Code', 'Fira Mono', 'Courier New', monospace",
     "editor.fontLigatures": true,
-    "workbench.iconTheme": "material-icon-theme",
+    "workbench.iconTheme": "eq-material-theme-icons",
     "extensions.autoUpdate": true,
     "typescript.autoImportSuggestions.enabled": false,
     "typescript.format.enable": false,
@@ -340,7 +340,7 @@
         "suppressUpdateNotice": true,
         "suppressWelcomeNotice": false
     },
-    "workbench.colorTheme": "Arc Dark",
+    "workbench.colorTheme": "Monokai Dimmed",
     "git.autofetch": true,
     "diffEditor.ignoreTrimWhitespace": true,
     "gitlens.keymap": "chorded",
