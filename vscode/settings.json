@@ -1,10 +1,24 @@
 {
+    "background.enabled": true,
+    "background.useDefault": false,
+    "background.customImages": [
+        "~/dotfiles/vscode/backgrounds/1.png"
+    ],
+    "background.style": {
+        "opacity": 0.2,
+    },
+    "typescript.validate.enable": false,
+    "background.useFront": true,
+    "breadcrumbs.enabled": true,
     "editor.tabSize": 2,
     "editor.detectIndentation": true,
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
     "editor.fontFamily": "'Iosevka', 'Fira Code', 'Fira Mono', 'Courier New', monospace",
     "editor.fontLigatures": true,
-    "workbench.iconTheme": "eq-material-theme-icons",
+    "workbench.iconTheme": "material-icon-theme",
+    "material-icon-theme.files.associations": {
+        "*.test.{js,jsx}": "test-tube"
+    },
     "extensions.autoUpdate": true,
     "typescript.autoImportSuggestions.enabled": false,
     "typescript.format.enable": false,
@@ -28,6 +42,7 @@
             }
         ]
     },
+    "javascript.updateImportsOnFileMove.enabled": "never",
     "code-runner.executorMap": {
         "javascript": "babel-node"
     },
@@ -57,9 +72,10 @@
     "purescript.autoStartPscIde": true,
     "purescript.addNpmPath": true,
     "purescript.packagePath": "**/bower_components",
+    "prettifySymbolsMode.revealOn": "cursor",
     "prettifySymbolsMode.substitutions": [
         {
-            "language": ["javascript", { "pattern": "**/*.js{x}" }],
+            "language": ["javascript", "typescript", { "pattern": "**/*.js{x}" }],
             "substitutions": [
                 {
                     "pre": "\\b",
@@ -340,9 +356,17 @@
         "suppressUpdateNotice": true,
         "suppressWelcomeNotice": false
     },
-    "workbench.colorTheme": "Monokai Dimmed",
+    "workbench.colorTheme": "Gatito Theme",
     "git.autofetch": true,
     "diffEditor.ignoreTrimWhitespace": true,
     "gitlens.keymap": "chorded",
     "material-icon-theme.showUpdateMessage": false,
+    "python.pythonPath": "/usr/local/bin/python",
+    "gitlens.historyExplorer.enabled": true,
+    "gitlens.views.fileHistory.enabled": true,
+    "gitlens.views.lineHistory.enabled": true,
+    "editor.minimap.enabled": false,
+    "java.errors.incompleteClasspath.severity": "ignore",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
 }
