@@ -90,13 +90,16 @@ function prompt_huh_setup {
   communism=☭
   ctxt=⊢
 
-  if [[ $ITERM_PROFILE != 'SUMMONING BOWLS' ]]; then
-    unam=''
-  else
+  unam="$dog "
+  gitstuff=''
+  if [[ $TERM_PROGRAM == 'vscode' ]]; then
     unam='%F{cyan}(%f%F{red}%n@%m%f%F{cyan})%f '
+    #gitstuff="${git_info:+${(e)git_info[prompt]}}%p%f"
   fi
 
-  PROMPT='$unam%F{green}%c%f${git_info:+${(e)git_info[prompt]}}%p%f %F{yellow}$ctxt%f '
+  #unam='%F{cyan}(%f%F{red}%n@%m%f%F{cyan})%f '
+
+  PROMPT='$unam%F{green}%c%f$gitstuff %F{yellow}$ctxt%f '
   }
 
 prompt_huh_setup "$@"
