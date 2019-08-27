@@ -56,7 +56,6 @@
         "**/build": true
     },
     "files.insertFinalNewline": true,
-    "vsicons.dontShowNewVersionMessage": true,
     "eslint.autoFixOnSave": true,
     "emmet.includeLanguages": {
         "javascript": "javascriptreact"
@@ -356,7 +355,7 @@
         "suppressUpdateNotice": true,
         "suppressWelcomeNotice": false
     },
-    "workbench.colorTheme": "Gatito Theme",
+    "workbench.colorTheme": "Noctis Minimus",
     "git.autofetch": true,
     "diffEditor.ignoreTrimWhitespace": true,
     "gitlens.keymap": "chorded",
@@ -369,4 +368,10 @@
     "java.errors.incompleteClasspath.severity": "ignore",
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "terminal.integrated.shell.osx": "/usr/local/bin/fish",
+    "terminal.external.osxExec": "iTerm2.app",
+    "vsicons.dontShowNewVersionMessage": true,
+    "latex-workshop.message.update.show": false,
+    "jest.pathToConfig": "./insure-now",
+    "jest.rootPath": "./insure-now"
 }
