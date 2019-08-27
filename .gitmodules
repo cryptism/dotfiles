@@ -1,3 +1,9 @@
 [submodule "emacs.d/spacemacs"]
 	path = emacs.d/spacemacs
 	url = https://github.com/syl20bnr/spacemacs.git
+[submodule "config/fish/fundle/edc/bass"]
+	path = config/fish/fundle/edc/bass
+	url = git@github.com:edc/bass.git
+[submodule "config/fish/fundle/tuvistavie/fish-fastdir"]
+	path = config/fish/fundle/tuvistavie/fish-fastdir
+	url = git@github.com:danhper/fish-fastdir.git
