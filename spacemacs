@@ -30,7 +30,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(csv
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -44,7 +44,14 @@ values."
      markdown
      themes-megapack
      org
-     syntax-checking haskell
+     docker
+     emoji
+     yaml
+     javascript
+     react
+     ocaml
+     racket
+     haskell
      ;; liquid-types
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -142,7 +149,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Iosevka"
-                               :size 14
+                               ;:size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
